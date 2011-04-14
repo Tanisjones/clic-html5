@@ -1,0 +1,30 @@
+<activity class="@memory.MemoryGame" name="memoria">
+   <messages>
+    <cell type="initial">
+     <style>
+      <font family="Arial" size="22" />
+      <color background="0xFFFFFF" />
+     </style>
+     <p>TROBA LES PARELLES</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0x000099">
+     <counters time="false" actions="false" score="false" />
+    </container>
+    <window bgColor="0x66FFFF" border="true" />
+   </settings>
+   <cells rows="2" cols="2" cellWidth="300.0" cellHeight="300.0" border="true" id="primary">
+    <style>
+     <font family="Arial" size="22" />
+     <color background="0xFFFFFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell image="construccions.jpg" />
+    <cell image="cuineta.jpg" />
+    <cell image="cotxe.jpg" />
+    <cell image="nina4.jpg" />
+   </cells>
+   <scramble times="31" />
+   <layout position="AB" />
+  </activity>

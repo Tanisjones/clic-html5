@@ -27,9 +27,7 @@
 	<script src="./js/lib_input_control.js"></script>	
 
 	<!-- Activity Templates -->
-	<script src="./js/activitat_memoria.js"></script>
-	<script src="./js/activitat_puzzle_doble.js"></script>
-	<script src="./js/activitat_puzzle_intercanvi.js"></script>
+	<script src="./js/activitat_puzzle_jordi.js"></script>
 
 	<!-- Fonts --> 
 	<script src="./fonts/vector_battle_regular.typeface.js"></script>
@@ -39,7 +37,7 @@
 	<script src="./fonts/helvetiker_italic.typeface.js"></script>
 
 	<!-- Data -->
-	<script src="data1.js"></script>
+	<script src="data.js"></script>
 		
 	<!-- Main Code -->	
 	<script src="./js/base_ui.js"></script>

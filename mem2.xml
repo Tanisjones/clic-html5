@@ -1,0 +1,44 @@
+<activity class="@memory.MemoryGame" name="Joc de memòria" code="">
+   <description />
+   <messages>
+    <cell border="true" type="initial">
+     <style borderStroke="3.0" markerStroke="2.7">
+      <font family="Arial Black" size="22" bold="true" />
+      <color foreground="0xCC0000" background="0xFFFF99" inactive="0xFFFF99" alternative="0xCCCCCC" border="0x99FF33" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Trob les parelles.mp3" />
+     <p>TROBA LES PARELLES</p>
+    </cell>
+    <cell border="true" type="final">
+     <style borderStroke="2.2" markerStroke="2.7">
+      <font family="Arial Black" size="22" bold="true" />
+      <color foreground="0xCC0000" background="0xFFFF99" border="0x99FF33" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Fantàstic.mp3" />
+     <p>FANTÀSTIC!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF66">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF9933" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="6" cellWidth="205.0" cellHeight="157.0" border="true" id="primary">
+    <style borderStroke="2.4" markerStroke="2.7">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" inactive="0xCCFF66" border="0xCC0000" />
+    </style>
+    <shaper class="@Rectangular" cols="6" rows="1" />
+    <cell image="pirata2[1].jpg" />
+    <cell image="pirata1[1].png" />
+    <cell image="espada_pirata_63_cm_CM035LI_1[1].jpg" />
+    <cell image="dibuix pirata.jpg" />
+    <cell image="barret.jpg" />
+    <cell image="GarfioPirata[1].jpg" />
+   </cells>
+   <scramble times="31" />
+   <layout position="AUB" />
+  </activity>

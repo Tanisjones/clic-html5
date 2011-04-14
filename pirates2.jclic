@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JClicProject name="pirates2" version="0.1.3">
+ <settings>
+  <title>Pirates</title>
+  <revision description="created" date="4/16/10" />
+  <revision description="Publicació a la zonaClic (http://clic.xtec.cat)" date="1/21/11">
+   <author name="Equip Clic" mail="clic@xtec.net" organization="Àrea TIC - Departament d'Educació" />
+  </revision>
+  <author name="Natàlia Berbel Martínez" mail="nberbel@xtec.cat" />
+  <organization name="ESC Enric Tatché i Pol" mail="a8033948@xtec.cat" url="http://phobos.xtec.cat/ceip-enric-tatche/intranet/" city="Ripollet" state="Catalunya" />
+  <language>català</language>
+  <description>
+   <p>Conjunt d'activitats pensades per treballar el vocabulari relacionat amb "els pirates" a propòsit de la realització d'un projecte amb els alumnes de P5 sobre aquest tema.</p>
+  </description>
+  <descriptors area="Llengües" level="Infantil (3-6)">lectoescriptura</descriptors>
+ </settings>
+ <sequence>
+  <item id="start" name="Inici">
+   <jump action="RETURN" id="back" />
+  </item>
+  <item name="Joc de memòria" />
+  <item name="Puzzle" />
+  <item name="Associació" />
+  <item name="Associació 1" />
+  <item name="Associació 2" />
+  <item name="Associació3" />
+  <item name="Sopa de lletres" />
+  <item name="Troba la paraula" />
+  <item name="Escriu">
+   <jump action="RETURN" id="forward" />
+  </item>
+ </sequence>
+ <activities>
+  <activity class="@associations.SimpleAssociation" name="Associació" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="1.6" markerStroke="5.0">
+      <font family="Arial" size="18" bold="true" />
+      <color foreground="0x660000" background="0x99FF66" border="0x660000" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="relaciona nena.mp3" />
+     <p>RELACIONA CADA PARAULA AMB EL DIBUIX</p>
+    </cell>
+    <cell type="final">
+     <style borderStroke="2.1" markerStroke="2.7">
+      <font family="Arial" size="18" bold="true" />
+      <color background="0xCC0000" border="0x99FF66" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Correceecte.mp3" />
+     <p>CORRECTE!!</p>
+    </cell>
+   </messages>
+   <settings margin="7" report="true" reportActions="false">
+    <container bgColor="0xFFFF33">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" cycles="3" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF6600" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="6" cellWidth="190.0" cellHeight="70.0" border="true" id="primary">
+    <style borderStroke="3.8" markerStroke="2.7">
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0x000066" background="0xFFFFFF" inactive="0xFF6666" border="0xCC0000" />
+    </style>
+    <shaper class="@Rectangular" cols="6" rows="1" />
+    <cell border="true">
+     <style borderStroke="3.1" markerStroke="2.7">
+      <font family="Arial" size="24" bold="true" />
+      <color foreground="0x000066" background="0xFFFFFF" inactive="0xFF6666" alternative="0xCCCCCC" border="0xCC0000" />
+     </style>
+     <p>CAPITÁ</p>
+    </cell>
+    <cell>
+     <style borderStroke="2.9" markerStroke="2.7">
+      <font family="Arial" size="24" bold="true" />
+      <color foreground="0x000066" background="0xFFFFFF" inactive="0xFF6666" alternative="0xCCCCCC" border="0xCC0000" />
+     </style>
+     <p>RATA</p>
+    </cell>
+    <cell>
+     <p>TIMÓ</p>
+    </cell>
+    <cell>
+     <p>PIPA</p>
+    </cell>
+    <cell>
+     <p>MAPA</p>
+    </cell>
+    <cell>
+     <p>REM</p>
+    </cell>
+   </cells>
+   <cells rows="1" cols="6" cellWidth="191.0" cellHeight="129.0" border="true" id="secondary">
+    <style borderStroke="2.8" markerStroke="2.7">
+     <font family="Arial" size="22" bold="true" />
+     <color background="0xFFFFFF" inactive="0x9999FF" border="0x66FF00" />
+    </style>
+    <shaper class="@Rectangular" cols="6" rows="1" />
+    <cell border="true" image="calico[1].jpg">
+     <style borderStroke="3.6" markerStroke="2.7">
+      <font family="Arial" size="24" bold="true" />
+      <color foreground="0x000066" background="0xFFFFFF" inactive="0x9999FF" alternative="0xCCCCCC" border="0x66FF00" />
+     </style>
+    </cell>
+    <cell image="rata[1].jpg" />
+    <cell image="timon-01-g[1].jpg" />
+    <cell image="pipa[1].jpg" />
+    <cell image="mapa.jpg" />
+    <cell image="rem.jpg" />
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@associations.SimpleAssociation" name="Associació 1" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="0.7" markerStroke="2.7">
+      <font family="Arial" size="18" bold="true" />
+      <color foreground="0xFF3300" background="0xCC99FF" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="aparella luca.mp3" />
+     <p>APARELLA CADA PARAULA AMB EL SEU DIBUIX</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <font family="Arial" size="18" bold="true" />
+      <color foreground="0x000066" background="0xFF99FF" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Geniaaal.mp3" />
+     <p>GENIAAAL!!</p>
+    </cell>
+   </messages>
+   <settings margin="6" report="true" reportActions="false">
+    <container bgColor="0xFFFF66">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" cycles="3" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF6600" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="7" cellWidth="174.0" cellHeight="102.0" border="true" id="primary">
+    <style borderStroke="3.6" markerStroke="2.7">
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0xFF3300" background="0xFFFFFF" inactive="0xCC99FF" border="0x660066" />
+    </style>
+    <shaper class="@Rectangular" cols="7" rows="1" />
+    <cell border="true">
+     <p>PEGAT</p>
+    </cell>
+    <cell>
+     <p>BARRET</p>
+    </cell>
+    <cell>
+     <p>ESPASA</p>
+    </cell>
+    <cell>
+     <p>BARCA</p>
+    </cell>
+    <cell>
+     <p>ILLA</p>
+    </cell>
+    <cell>
+     <p>PIRATA</p>
+    </cell>
+    <cell>
+     <p>BANDERA</p>
+    </cell>
+   </cells>
+   <cells rows="1" cols="7" cellWidth="174.0" cellHeight="150.0" border="true" id="secondary">
+    <style borderStroke="3.6" markerStroke="2.7">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" inactive="0xFF99FF" border="0x3333FF" />
+    </style>
+    <shaper class="@Rectangular" cols="7" rows="1" />
+    <cell image="pegat.jpg" />
+    <cell image="barret.jpg" />
+    <cell image="espada_pirata_63_cm_CM035LI_1[1].jpg" />
+    <cell image="isla-saona[1].jpg" />
+    <cell image="illa.jpg" />
+    <cell image="pirata1[1].png" />
+    <cell image="bandera-pirata[1].jpg" />
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@associations.SimpleAssociation" name="Associació 2" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="0.7" markerStroke="5.0">
+      <font family="Arial" size="20" bold="true" />
+      <color background="0xCCFF66" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="relaciona nena.mp3" />
+     <p>RELACIONA CADA PARAULA AMB EL SEU DIBUIX</p>
+    </cell>
+    <cell type="final">
+     <style borderStroke="0.7" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color background="0xCCFF66" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="E:/veus/Sííí.mp3" />
+     <p>SÍÍÍ...</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFCC00">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" cycles="3" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xCCFF66" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="5" cols="1" cellWidth="164.0" cellHeight="81.0" border="true" id="primary">
+    <style borderStroke="2.0" markerStroke="2.7">
+     <font family="Arial" size="24" bold="true" />
+     <color foreground="0x660000" background="0xFFFFCC" inactive="0xFFCC00" border="0x993300" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="5" />
+    <cell>
+     <p>TAURÓ</p>
+    </cell>
+    <cell>
+     <p>VAIXELL</p>
+    </cell>
+    <cell>
+     <p>COFRE</p>
+    </cell>
+    <cell>
+     <p>COCODRIL</p>
+    </cell>
+    <cell>
+     <p>CANNÓ</p>
+    </cell>
+   </cells>
+   <cells rows="5" cols="1" cellWidth="138.0" cellHeight="104.0" border="true" id="secondary">
+    <style borderStroke="2.1" markerStroke="2.7">
+     <color background="0xFFCC33" inactive="0xCC3300" border="0xFF3300" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="5" />
+    <cell image="tiburon[1].jpg" />
+    <cell image="VAIXELL-resized.jpg" />
+    <cell image="cofre-pirata[1].jpg" />
+    <cell image="cocodrilo.jpg" />
+    <cell image="canon-de-tsares-t5020[1].jpg" />
+   </cells>
+   <scramble times="31" primary="true" secondary="true" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@associations.SimpleAssociation" name="Associació3" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="0.7" markerStroke="2.7">
+      <font family="Arial" size="20" bold="true" />
+      <color background="0xCCFF99" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="aparella nena.mp3" />
+     <p>APARELLA CADA PARAULA AMB EL SEU DIBUIX</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0x333300" background="0xFFCC99" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="E:/veus/Molt be.mp3" />
+     <p>MOLT BÉ!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF00">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" cycles="3" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF6600" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="4" cols="1" cellWidth="164.0" cellHeight="92.0" border="true" id="primary">
+    <style borderStroke="2.0" markerStroke="2.7">
+     <font family="Arial" size="24" />
+     <color foreground="0x333300" background="0xCCFFCC" inactive="0xFFCC99" border="0x333300" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="4" />
+    <cell>
+     <p>LLORO</p>
+    </cell>
+    <cell>
+     <p>BRÚIXOLA</p>
+    </cell>
+    <cell>
+     <p>TRESOR</p>
+    </cell>
+    <cell>
+     <p>CALAVERA</p>
+    </cell>
+   </cells>
+   <cells rows="4" cols="1" cellWidth="181.0" cellHeight="127.0" border="true" id="secondary">
+    <style borderStroke="2.2" markerStroke="2.7">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" inactive="0xCCFF99" border="0x333300" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="4" />
+    <cell image="loro[1]-resized.jpg" />
+    <cell image="brujula[1].jpg" />
+    <cell image="tesoro2[1].jpg" />
+    <cell image="calavera[1].gif" />
+   </cells>
+   <scramble times="31" primary="false" secondary="true" />
+   <layout position="AB" />
+  </activity>
+  <activity class="@text.WrittenAnswer" name="Escriu" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="0.7" markerStroke="2.7">
+      <font family="Arial" size="20" bold="true" />
+      <color foreground="0x990000" background="0xCCFF33" />
+     </style>
+     <p>BANDERA, VAIXELL, TRESOR, BARRET, PIRATA</p>
+    </cell>
+    <cell type="final">
+     <style>
+      <font family="Arial" size="20" bold="true" />
+      <color foreground="0x990000" background="0xCCFF33" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="E:/veus/Sííí.mp3" />
+     <p>SÍÍÍ...</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF33">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="79" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xCCFF33" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="5" cellWidth="181.0" cellHeight="148.0" border="true" id="primary">
+    <style borderStroke="1.4" markerStroke="2.7">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" inactive="0xFF3300" border="0x990000" />
+    </style>
+    <shaper class="@Rectangular" cols="5" rows="1" />
+    <cell id="0" image="bandera-pirata[1].jpg" />
+    <cell id="1" image="dibuix pirata.jpg" />
+    <cell id="2" image="tesoro1[1].jpg" />
+    <cell id="3" image="barret.jpg">
+     <p>BARRET</p>
+    </cell>
+    <cell id="4" image="piratas-barco[1].jpg" />
+   </cells>
+   <cells rows="1" cols="5" cellWidth="181.0" cellHeight="91.0" border="true" id="answers">
+    <style borderStroke="1.9" markerStroke="2.7">
+     <font family="Arial" size="20" bold="true" />
+     <color foreground="0x990000" background="0x66FF00" border="0x990000" />
+    </style>
+    <shaper class="@Rectangular" cols="5" rows="1" />
+    <cell>
+     <p>BANDERA</p>
+    </cell>
+    <cell>
+     <p>PIRATA</p>
+    </cell>
+    <cell>
+     <p>TRESOR</p>
+    </cell>
+    <cell>
+     <p>BARRET</p>
+    </cell>
+    <cell>
+     <p>VAIXELL</p>
+    </cell>
+   </cells>
+   <scramble times="31" primary="false" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@panels.InformationScreen" name="Inici" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="0.7" markerStroke="5.0">
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0xFFFFFF" background="0x3366FF" />
+     </style>
+     <p>LA SELVA I EL GEL FAN DE PIRATES</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="false">
+    <container bgColor="0xC0C0C0">
+     <image name="dibuix pirata.jpg" tiled="true" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF6600" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="1" cellWidth="303.0" cellHeight="219.0" border="true">
+    <style borderStroke="3.0" markerStroke="5.0">
+     <font family="Arial" size="36" bold="true" />
+     <color foreground="0xCC0000" background="0x00CCCC" border="0x0000CC" />
+     <gradient source="0x00CCCC" dest="0xFFFFFF" angle="85" />
+    </style>
+    <shaper class="@Rectangular" cols="1" rows="1" />
+    <cell txtAlign="middle,bottom" imgAlign="middle,top" image="lloro gif.gif">
+     <p>PIRATES</p>
+    </cell>
+   </cells>
+  </activity>
+  <activity class="@memory.MemoryGame" name="Joc de memòria" code="">
+   <description />
+   <messages>
+    <cell border="true" type="initial">
+     <style borderStroke="3.0" markerStroke="2.7">
+      <font family="Arial Black" size="22" bold="true" />
+      <color foreground="0xCC0000" background="0xFFFF99" inactive="0xFFFF99" alternative="0xCCCCCC" border="0x99FF33" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Trob les parelles.mp3" />
+     <p>TROBA LES PARELLES</p>
+    </cell>
+    <cell border="true" type="final">
+     <style borderStroke="2.2" markerStroke="2.7">
+      <font family="Arial Black" size="22" bold="true" />
+      <color foreground="0xCC0000" background="0xFFFF99" border="0x99FF33" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Fantàstic.mp3" />
+     <p>FANTÀSTIC!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF66">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF9933" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="1" cols="6" cellWidth="205.0" cellHeight="157.0" border="true" id="primary">
+    <style borderStroke="2.4" markerStroke="2.7">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" inactive="0xCCFF66" border="0xCC0000" />
+    </style>
+    <shaper class="@Rectangular" cols="6" rows="1" />
+    <cell image="pirata2[1].jpg" />
+    <cell image="pirata1[1].png" />
+    <cell image="espada_pirata_63_cm_CM035LI_1[1].jpg" />
+    <cell image="dibuix pirata.jpg" />
+    <cell image="barret.jpg" />
+    <cell image="GarfioPirata[1].jpg" />
+   </cells>
+   <scramble times="31" />
+   <layout position="AUB" />
+  </activity>
+  <activity class="@puzzles.ExchangePuzzle" name="Puzzle" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="1.4" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0x330033" background="0x99FF66" border="0x330033" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="E:/veus/Què és.mp3" />
+     <p>QUÈ ÉS?</p>
+    </cell>
+    <cell type="final">
+     <style borderStroke="2.0" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0x330033" background="0x99FF66" border="0xFF66FF" />
+     </style>
+     <p>UN VAIXELL!</p>
+    </cell>
+   </messages>
+   <settings margin="8" dragCells="true" report="true" reportActions="false">
+    <container bgColor="0xFFFF66">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF6600" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <cells rows="2" cols="3" border="true" image="VAIXELL-resized.jpg">
+    <style />
+    <shaper class="@Rectangular" cols="3" rows="2" />
+   </cells>
+   <scramble times="31" />
+  </activity>
+  <activity class="@textGrid.WordSearch" name="Sopa de lletres" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="1.5" markerStroke="2.7">
+      <font family="Arial" size="20" bold="true" />
+      <color background="0xFF0000" border="0xFFFFFF" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Sopa de lletres.mp3" />
+     <p>PIRATA, ESPASA, BARRET, PEGAT</p>
+    </cell>
+    <cell type="final">
+     <style borderStroke="2.2" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color background="0xFF0000" border="0xFFFFFF" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Què bééé.mp3" />
+     <p>QUÈ BÉÉÉ!!!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFCC00">
+     <gradient source="0xFFFF66" dest="0xFFFFFF" angle="269" />
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xFF3333" border="true" />
+    <skin file="@orange.xml" />
+   </settings>
+   <textGrid rows="8" columns="6" cellWidth="73.0" cellHeight="64.0" border="true">
+    <style borderStroke="2.3" markerStroke="5.0">
+     <font family="Comic Sans MS" size="26" bold="true" />
+     <color foreground="0xCC0000" background="0xFFFFFF" />
+    </style>
+    <text>
+     <row>P*PIRATA</row>
+     <row>E*******</row>
+     <row>G*ESPASA</row>
+     <row>A*******</row>
+     <row>T*******</row>
+     <row>*BARRET*</row>
+    </text>
+   </textGrid>
+   <clues>
+    <clue id="0">PIRATA</clue>
+    <clue id="1">PEGAT</clue>
+    <clue id="2">ESPASA</clue>
+    <clue id="3">BARRET</clue>
+   </clues>
+   <cells rows="2" cols="2" cellWidth="154.0" cellHeight="156.0" border="true" id="secondary">
+    <style borderStroke="0.7" markerStroke="5.0">
+     <font family="Arial" size="17" bold="true" />
+     <color background="0xFFFFFF" />
+    </style>
+    <shaper class="@Rectangular" cols="2" rows="2" />
+    <cell image="pirata1[1].png" />
+    <cell image="pegat.jpg" />
+    <cell image="espada_pirata_63_cm_CM035LI_1[1].jpg" />
+    <cell image="barret.jpg" />
+   </cells>
+   <layout position="AB" />
+  </activity>
+  <activity class="@text.FillInBlanks" name="Troba la paraula" code="">
+   <description />
+   <messages>
+    <cell type="initial">
+     <style borderStroke="3.5" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0x990000" background="0x99FF33" border="0x990000" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="E:/veus/Troba la pa.mp3" />
+     <p>TROBA LA PARAULA</p>
+    </cell>
+    <cell type="final">
+     <style borderStroke="3.6" markerStroke="2.7">
+      <font family="Arial" size="22" bold="true" />
+      <color foreground="0x990000" background="0x99FF33" border="0x990000" />
+     </style>
+     <media type="PLAY_AUDIO" level="1" file="Correceecte.mp3" />
+     <p>CORRECTE!</p>
+    </cell>
+   </messages>
+   <settings margin="8" report="true" reportActions="false">
+    <container bgColor="0xFFFF66">
+     <counters time="true" actions="true" score="true" />
+    </container>
+    <window bgColor="0xC0C0C0" border="true">
+     <size width="649" height="590" />
+    </window>
+    <skin file="@orange.xml" />
+   </settings>
+   <document>
+    <style name="default" family="Arial" bold="false" background="0xFFFFFF" size="20" tabWidth="12" foreground="0x0000CC" italic="false" />
+    <style name="target" base="default" target="true" foreground="0x00CC00" />
+    <style name="targetError" base="target" foreground="0xFF0000" />
+    <section>
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">
+      <text bold="true" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">TROBA LA PARAULA</text>
+     </p>
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">EL </text>
+      <target>
+       <answer>PIRATA</answer>
+       <optionList>
+        <option>PINTOR</option>
+        <option>PIANISTA</option>
+        <option>PIRATA</option>
+       </optionList>
+       <text>PIRATA</text>
+      </target>
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false"> TENIA UN PEGAT I UNA PIPA.</text>
+      <cell width="100" height="100" image="pirata1[1].png">
+       <style transparent="true" borderStroke="0.7" markerStroke="5.0">
+        <color background="0xFFFFFF" />
+       </style>
+      </cell>
+     </p>
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false" />
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">NO TROBO LA </text>
+      <target>
+       <answer>BRÚIXOLA</answer>
+       <optionList>
+        <option>BATA</option>
+        <option>BRÚIXOLA</option>
+        <option>BOTÓ</option>
+       </optionList>
+       <text>BRÚIXOLA</text>
+      </target>
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false"> AL COFRE.</text>
+      <cell width="100" height="100" image="brujula[1].jpg">
+       <style transparent="true" borderStroke="0.7" markerStroke="5.0">
+        <color background="0xFFFFFF" />
+       </style>
+      </cell>
+     </p>
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false" />
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">LA RATA  ESTÀ AL </text>
+      <target>
+       <answer>TIMÓ</answer>
+       <optionList>
+        <option>TIMÓ</option>
+        <option>TIMBAL</option>
+        <option>TERRAT</option>
+       </optionList>
+       <text>TIMÓ</text>
+      </target>
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false"> DEL VAIXELL .</text>
+      <cell width="100" height="100" image="timon-01-g[1].jpg">
+       <style transparent="true" borderStroke="0.7" markerStroke="5.0">
+        <color background="0xFFFFFF" />
+       </style>
+      </cell>
+     </p>
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false" />
+     <p bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">L'ILLA DEL TRESOR NO SORTIA AL </text>
+      <target>
+       <answer>MAPA</answer>
+       <optionList>
+        <option>DIBUIX</option>
+        <option>PLÀNOL</option>
+        <option>MAPA</option>
+       </optionList>
+       <text>MAPA</text>
+      </target>
+      <text bold="false" family="Arial" background="0xFFFFFF" size="20" foreground="0x0000CC" italic="false">.</text>
+      <cell width="100" height="100" image="mapa.jpg">
+       <style transparent="true" borderStroke="0.7" markerStroke="5.0">
+        <color background="0xFFFFFF" />
+       </style>
+      </cell>
+     </p>
+    </section>
+   </document>
+   <evaluator class="@ComplexEvaluator" />
+  </activity>
+ </activities>
+ <mediaBag>
+  <media name="calavera[1].gif" file="calavera[1].gif" />
+  <media name="lloro gif.gif" file="lloro gif.gif" />
+  <media name="bandera-pirata[1].jpg" file="bandera-pirata[1].jpg" />
+  <media name="barret.jpg" file="barret.jpg" />
+  <media name="brujula[1].jpg" file="brujula[1].jpg" />
+  <media name="calico[1].jpg" file="calico[1].jpg" />
+  <media name="canon-de-tsares-t5020[1].jpg" file="canon-de-tsares-t5020[1].jpg" />
+  <media name="cocodrilo.jpg" file="cocodrilo.jpg" />
+  <media name="cofre-pirata[1].jpg" file="cofre-pirata[1].jpg" />
+  <media name="dibuix pirata.jpg" file="dibuix pirata.jpg" />
+  <media name="espada_pirata_63_cm_CM035LI_1[1].jpg" file="espada_pirata_63_cm_CM035LI_1[1].jpg" />
+  <media name="GarfioPirata[1].jpg" file="GarfioPirata[1].jpg" />
+  <media name="illa.jpg" file="illa.jpg" />
+  <media name="isla-saona[1].jpg" file="isla-saona[1].jpg" />
+  <media name="loro[1]-resized.jpg" file="loro[1]-resized.jpg" />
+  <media name="mapa.jpg" file="mapa.jpg" />
+  <media name="pegat.jpg" file="pegat.jpg" />
+  <media name="pipa[1].jpg" file="pipa[1].jpg" />
+  <media name="pirata2[1].jpg" file="pirata2[1].jpg" />
+  <media name="piratas-barco[1].jpg" file="piratas-barco[1].jpg" />
+  <media name="rata[1].jpg" file="rata[1].jpg" />
+  <media name="rem.jpg" file="rem.jpg" />
+  <media name="tesoro1[1].jpg" file="tesoro1[1].jpg" />
+  <media name="tesoro2[1].jpg" file="tesoro2[1].jpg" />
+  <media name="tiburon[1].jpg" file="tiburon[1].jpg" />
+  <media name="timon-01-g[1].jpg" file="timon-01-g[1].jpg" />
+  <media name="VAIXELL-resized.jpg" file="VAIXELL-resized.jpg" />
+  <media name="aparella luca.mp3" file="aparella luca.mp3" />
+  <media name="aparella nena.mp3" file="aparella nena.mp3" />
+  <media name="Correceecte.mp3" file="Correceecte.mp3" />
+  <media name="Fantàstic.mp3" file="Fantàstic.mp3" />
+  <media name="Geniaaal.mp3" file="Geniaaal.mp3" />
+  <media name="Què bééé.mp3" file="Què bééé.mp3" />
+  <media name="relaciona nena.mp3" file="relaciona nena.mp3" />
+  <media name="Sopa de lletres.mp3" file="Sopa de lletres.mp3" />
+  <media name="Trob les parelles.mp3" file="Trob les parelles.mp3" />
+  <media name="pirata1[1].png" file="pirata1[1].png" />
+  <media name="pirata1[1].png" file="pirata1[1].png" />
+ </mediaBag>
+</JClicProject>
+
