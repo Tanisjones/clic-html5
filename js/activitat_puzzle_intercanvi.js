@@ -17,9 +17,11 @@ function PuzzleIntercanvi(){
 	var myImages = new ImageSet();
 	var grid;
 	var peces;
+	var dist;
 	var x = new Array();
 	var y = new Array();
 	var ordArray = new Array();
+	var grid, showW, showH, gridDibx, gridDiby;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -34,46 +36,54 @@ function PuzzleIntercanvi(){
 		
 		//Inicialitzar les imatges
 		var myImage = new Image();
+		
 		myImage.onload = function() {
 			imageLoaded = true;
+			w=myImage.width;
+			h=myImage.height;
+			showW=myImage.width;
+			showH=myImage.height;
+			
+			gridAx=(1024-w)/2;
+			gridAy=(590-h)/2;
+				if((w+w+24) > 1024){
+					showW=500; 
+					showH=h-(w-500); 
+					gridAx=(1024-showW)/2; 
+					gridAy=(590-showH)/2; 
+				}
+			
+			lines=activityData.imatge.lines;
+			cols=activityData.imatge.cols;
+				
+			peces = createPeca(context, myImage, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridAx,y:gridAy}, {w:showW,h:showH});
+			
+			grid = new Grid(context, lines, cols, {width:showW,height:showH}, {x:gridAx,y:gridAy});
+
+			/*****************DESORDENAR PECES*************************/ 
+			for (var o=0;o<lines*cols;o++){
+				ordArray[o]=o;
+			}
+			
+			ordArray.sort( randOrd );
+			
+			for (var o=0;o<peces.length;o++){
+				x[o]=peces[o].posx;
+				y[o]=peces[o].posy;
+			}
+			
+			for (var o=0;o<peces.length;o++){
+				peces[o].setPosx(x[ordArray[o]]);
+				peces[o].setPosy(y[ordArray[o]]);
+			}	
+			/************************************************************/
+		
+			for (var o=0;o<peces.length;o++){	
+				myImages.add(peces[o]);
+			} 
+
 		};
 		myImage.src = activityData.imatge.src;
-		
-		w=225;
-		h=225;
-		
-		gridAx=(1024-w)/2;
-		gridAy=(590-h)/2;
-		
-		lines=activityData.imatge.lines;
-		cols=activityData.imatge.cols;
-		
-		peces = createPeca(context, myImage, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, gridAx, gridAy);
-
-		grid = new Grid(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy});
-		
-		/*****************DESORDENAR PECES*************************/ 
-		for (var o=0;o<lines*cols;o++){
-			ordArray[o]=o;
-		}
-		
-		ordArray.sort( randOrd );
-		
-		for (var o=0;o<peces.length;o++){
-			x[o]=peces[o].posx;
-			y[o]=peces[o].posy;
-		}
-		
-		for (var o=0;o<peces.length;o++){
-			peces[o].setPosx(x[ordArray[o]]);
-			peces[o].setPosy(y[ordArray[o]]);
-		}	
-		/************************************************************/
-		
-		for (var u=0;u<peces.length;u++){
-			myImages.add(peces[u]);
-		} 
-
 	};
 	
 	//Aqui dins va el codi de l'activitat
@@ -84,15 +94,18 @@ function PuzzleIntercanvi(){
 		if(DragData.active)
 		{
 			myText.renderText('DRAG FROM: '+DragData.startPosX+' '+DragData.startPosY, 24, 10,30);  
+			
 			//Choose the selected image and activate it
 			if(frontImage=='none'){	
 				frontImage=myImages.getFrontImage(DragData.startPosX, DragData.startPosY);
 				if(frontImage!='notfound') frontImage.setDraggable();
+				
 			}
 			//Move the dragged image around
 			if(frontImage!='notfound'){
 				frontImage.drag(DragData.startPosX-DragData.currentPosX, DragData.startPosY-DragData.currentPosY);
 			}
+			
 		//Disable the current active image
 		}else{
 			if (!frontImage.colocada){	//per col·locar-la no h a d'estar col·locada
@@ -127,10 +140,10 @@ function PuzzleIntercanvi(){
 			myText.renderText('FINALITZAT:', 24, 30,60);
 		}
 		
-		
 		//DRAW THE IMAGE
 		myImages.draw();
 		grid.draw();
+
 	};
 	
 	//Aquest funcio s'ha de cridar un cop s'ha acabat l'activitat i es canvia a una altra

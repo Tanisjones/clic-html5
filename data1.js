@@ -6,7 +6,7 @@ tipusActivitat[1] = "PuzzleDoble";
 dadesActivitat[1] = {
 					"textInit": "Activitat 1",
 					"textFinal": "FINALITZAT",
-					"imatge" : { "src" : './images/construccions.jpg', "lines": 3, "cols": 3},
+					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3},
 					"distribucio" : "AB"
 					};
 
@@ -14,7 +14,7 @@ tipusActivitat[2] = "PuzzleIntercanvi";
 dadesActivitat[2] = {
 					"textInit": "Activitat 3",
 					"textFinal": "FINALITZAT",
-					"imatge" : { "src" : './images/pingui.jpg', "lines": 3, "cols": 3}
+					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3}
 					};
 
 tipusActivitat[3] = "Memoria";
