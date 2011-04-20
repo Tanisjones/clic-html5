@@ -14,7 +14,7 @@ function Memoria(){
 	var acabat=false;
 	var lines,cols;
 	var w,h;
-	var myImages = new ImageSet();
+	var myImages = new ImageSetMemory();
 	var grid;
 	var peces;
 	var dist;
@@ -32,64 +32,132 @@ function Memoria(){
 		//Inicialitzar la font
 		myText.context = context;
 		myText.face = vector_battle;
-		/*
-		//Inicialitzar les imatges
-		var myImage = new Image();
-		myImage.onload = function() {
-			imageLoaded = true;
-		};
-		myImage.src = activityData.imatge.src;
-*/
-		//Problema amb les mides de la foto !!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//w=myImage.width;
-		//h=myImage.height;
+
+		w=activityData.cellWidth;
+		h=activityData.cellHeight;
 		
-		lines=activityData.lines*2;
-		cols=activityData.cols;
-		/**/
-		w=100*cols;
-		h=100*lines;
+		dist = activityData.distribucio;
+		
+		/**************************************
+		// w: amplada general
+		// h: alçada general
+		// incrShowX: amplada peça
+		// incrShowY: alçada peça
+		***/
+		
+		if ((dist == "AB")||(dist == "BA")){
+			lines=activityData.lines*2;
+			cols=activityData.cols*2;
+			
+			if ((h*lines) > 566){ 	
+				incrShowY=566/lines;
+				aux=h-incrShowY;
+				h=566;
+				incrShowX=w-aux;
+				w=incrShowX*cols;
+			}else{
+				incrShowY=h;
+				h=incrShowY*lines;
+			}
+		}
+		if ((dist == "AUB")||(dist == "BUA")){
+			lines=activityData.lines*2;
+			cols=activityData.cols;
+			
+			if ((w*cols) > 1000){ 
+				incrShowX=1000/cols; 
+				aux=w-incrShowX;
+				w=1000;
+				incrShowY=h-aux;
+				h=incrShowY*lines;
+			}else{
+				incrShowX=w;
+				w=incrShowX*cols;
+			}
+		}
 		
 		gridAx=(1024-w)/2;
 		gridAy=(590-h)/2;
-	
-		//peces = createPecesMemory(context, activityData.llistaImatges, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, gridAx, gridAy);
 		
-		grid = new Grid_rectangular(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy});
+			//peces = createPecesMemory(context, activityData.llistaImatges, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, gridAx, gridAy);
 		
+
+		var id_img=0;
+		var numPeca=1;
+		var peces = new Array();
 		
-	
-		/*for (var o=0;o<peces.length;o++){	
-			myImages.add(peces[o]);
-		} */
+		for(var i=0; i<6; i++){
+			
+			var myImage = new Image();
+			
+			myImage.onload = function() {
+				imageLoaded = true;
+			};
+
+			myImage.src = activityData.llistaImatges[i].src;
+			var novaPeca = new ImageMemory(context, id_img, myImage,incrShowX,incrShowY);
+			novaPeca.setNumPeca(numPeca);
+			peces.push(novaPeca);
+			id_img++;
+			
+			var novaPeca2 = new ImageMemory(context, id_img, myImage,incrShowX,incrShowY);
+			novaPeca2.setNumPeca(numPeca);
+			peces.push(novaPeca2);
+			id_img++;
+			
+			numPeca++;
+			
+		}
+
+		/////////////////////////////////////////////////////////DESORDENAR PECES
 		
-		
-		/*
 		for (var o=0;o<lines*cols;o++){
 			ordArray[o]=o;
 		}
 		
-		ordArray.sort( randOrd );
+		//// Trobem les posicions que hi haurà a la graella
 		
-		for (var o=0;o<peces.length;o++){
-			x[o]=peces[o].posx;
-			y[o]=peces[o].posy;
-		}
+		var theX = gridAx;
+		var theY = gridAy;
+		var o = 0;
+	    
+		for(var i=0;i<lines;i++) { 
+	        for(var j=0;j<cols;j++) { 
+	        	x[o]=theX;
+	        	y[o]=theY;
+	        	theX += incrShowX;
+	            o++;
+	        }
+	        theX = gridAx;
+	        theY +=  incrShowY;
+	    }
+	    /////
+		
+		ordArray.sort( randOrd );
 		
 		for (var o=0;o<peces.length;o++){
 			peces[o].setPosx(x[ordArray[o]]);
 			peces[o].setPosy(y[ordArray[o]]);
 		}	
+		/////////////////////////////////////////////////////////////////////////////
+			
 		
-	
+		grid = new Grid(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy});
 		
-*/
+		for (var o=0;o<peces.length;o++){	
+			myImages.add(peces[o]);
+		}
+		
 	};
 	
 	//Aqui dins va el codi de l'activitat
 	this.run = function() {
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
-
+		
+		//DRAW THE IMAGE
+		myImages.draw();
+		grid.draw();
+		
 		//LLEGIR DADES USUARI
 		if(DragData.active)
 		{
@@ -108,7 +176,18 @@ function Memoria(){
 			
 		//Disable the current active image
 		}else{
-			if (!frontImage.colocada){	//per col·locar-la no h a d'estar col·locada
+			/**
+			 * FER LA LÍNIA D'UNIÓ
+			 */
+			
+			context.beginPath(); //esborra anteriors
+			context.moveTo(DragData.currentPosX, DragData.currentPosY);
+			context.lineTo(frontImage.posx, 600);
+			/* draw it! */   
+			context.strokeStyle = "#000";
+			context.stroke();	
+			
+			/*if (!frontImage.colocada){	//per col·locar-la no h a d'estar col·locada
 				if (DragData.currentPosX>=(frontImage.colocaciox)&&DragData.currentPosX<=(frontImage.colocaciox+frontImage.w)&&
 						DragData.currentPosY>=(frontImage.colocacioy)&&DragData.currentPosY<=(frontImage.colocacioy+frontImage.h)){
 					frontImage.posx=frontImage.colocaciox;
@@ -128,7 +207,7 @@ function Memoria(){
 			if(frontImage!='none'){
 				if(frontImage!='notfound') frontImage.unsetDraggable();
 				frontImage='none';
-			}
+			}*/
 		}		
 		
 		//COMPROVAR ESTAT ACTIVITAT
@@ -141,9 +220,7 @@ function Memoria(){
 		}
 		
 		
-		//DRAW THE IMAGE
-		//myImages.draw();
-		grid.draw();
+		
 	};
 	
 	//Aquest funcio s'ha de cridar un cop s'ha acabat l'activitat i es canvia a una altra

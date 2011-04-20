@@ -21,7 +21,7 @@ function PuzzleIntercanvi(){
 	var x = new Array();
 	var y = new Array();
 	var ordArray = new Array();
-	var grid, showW, showH, gridDibx, gridDiby;
+	var grid, showW, showH, gridAx, gridAy;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){

@@ -2,23 +2,8 @@ var maxActivitats = 3;
 var tipusActivitat = [];
 var dadesActivitat = [];
 
-tipusActivitat[1] = "PuzzleDoble";
+tipusActivitat[1] = "Memoria";
 dadesActivitat[1] = {
-					"textInit": "Activitat 1",
-					"textFinal": "FINALITZAT",
-					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3},
-					"distribucio" : "AB"
-					};
-
-tipusActivitat[2] = "PuzzleIntercanvi";
-dadesActivitat[2] = {
-					"textInit": "Activitat 3",
-					"textFinal": "FINALITZAT",
-					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3}
-					};
-
-tipusActivitat[3] = "Memoria";
-dadesActivitat[3] = {
 					"textInit": "Activitat 2",
 					"textFinal": "FINALITZAT",
 					"imatge" : { "src" : './images/pingui.jpg'},
@@ -29,5 +14,23 @@ dadesActivitat[3] = {
 					                   { "src" : './images/barret.jpg'},
 					                   { "src" : './images/GarfioPirata[1].jpg'}],
 					"cols": 6,
-					"lines": 1
+					"lines": 1,
+					"cellWidth" : 225.0,
+					"cellHeight" : 225.0,
+					"distribucio" : "AUB"
+					};
+
+tipusActivitat[2] = "PuzzleIntercanvi";
+dadesActivitat[2] = {
+					"textInit": "Activitat 3",
+					"textFinal": "FINALITZAT",
+					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3}
+					};
+
+tipusActivitat[3] = "PuzzleDoble";
+dadesActivitat[3] = {
+					"textInit": "Activitat 1",
+					"textFinal": "FINALITZAT",
+					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3},
+					"distribucio" : "AB"
 					};
