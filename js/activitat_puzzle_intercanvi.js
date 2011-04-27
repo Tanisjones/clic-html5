@@ -104,7 +104,7 @@ function PuzzleIntercanvi(){
 			}
 
 			//MIRAR SI S'HA CLICAT FORA DEL PANELL
-			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h){
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < gridAx+w && DragData.currentPosY >= gridAy && DragData.currentPosY < gridAy+h){
 				primerClic = true;
 				if (segonClic==true){
 					idSegon = frontImage.id;
@@ -116,7 +116,7 @@ function PuzzleIntercanvi(){
 			colocades=0;
 			
 			//MIRAR SI S'HA CLICAT FORA DEL PANELL
-			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h){
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < gridAx+w && DragData.currentPosY >= gridAy && DragData.currentPosY < gridAy+h){
 				if(tercerClic==true)
 				{
 					var auxX = myImages.images[idPrimer].posx;

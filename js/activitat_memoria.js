@@ -169,7 +169,7 @@ function Memoria(){
 				if(frontImage!='notfound') frontImage.setDraggable();
 			}
 
-			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h*2){
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < gridAx+w && DragData.currentPosY >= gridAy && DragData.currentPosY < gridAy+h){
 				primerClic = true;
 				if (segonClic==true){
 					idSegon = frontImage.id;
@@ -185,7 +185,7 @@ function Memoria(){
 		//Disable the current active image
 		}else{
 
-			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h*2){
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < gridAx+w && DragData.currentPosY >= gridAy && DragData.currentPosY < gridAy+h){
 				if(tercerClic==true)
 				{
 					if(numPrimer != numSegon){
