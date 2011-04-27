@@ -47,59 +47,59 @@ function PuzzleDoble(){
 			dist = activityData.distribucio;
 			
 			if (dist == "AB"){
-				gridAx=(1024-(w+w+12))/2;
-				gridAy=(590-h)/2;
+				gridAx=(canvasWidth-(w+w+12))/2;
+				gridAy=(canvasHeight-h)/2;
 				gridBx=gridAx+w+12;
 				gridBy=gridAy;
-				if((w+w+24) > 1024){
-					showW=500; 
-					showH=h-(w-500); 
-					gridAx=(1024-(showW+showW+12))/2; 
-					gridAy=(590-showH)/2; 
+				if((w+w+24) > canvasWidth){
+					showW=(canvasWidth-24)/2; 
+					showH=h-(w-((canvasWidth-24)/2)); 
+					gridAx=(canvasWidth-(showW+showW+12))/2; 
+					gridAy=(canvasHeight-showH)/2; 
 					gridBx=gridAx+showW+12; 
 					gridBy=gridAy;
 				}
 			}
 			else if (dist == "BA"){
-				gridBx=(1024-(w+w+12))/2;
-				gridBy=(590-h)/2;
+				gridBx=(canvasWidth-(w+w+12))/2;
+				gridBy=(canvasHeight-h)/2;
 				gridAx=gridBx+w+12;
 				gridAy=gridBy;
-				if((w+w+24) > 1024){
-					showW=500; 
-					showH=h-(w-500); 
-					gridBx=(1024-(showW+showW+12))/2; 
-					gridBy=(590-showH)/2; 
+				if((w+w+24) > canvasWidth){
+					showW=(canvasWidth-24)/2; 
+					showH=h-(w-((canvasWidth-24)/2)); 
+					gridBx=(canvasWidth-(showW+showW+12))/2; 
+					gridBy=(canvasHeight-showH)/2; 
 					gridAx=gridBx+showW+12; 
 					gridAy=gridBy;
 				}
 			}
 			else if (dist == "AUB"){
-				if((h+h+12) > 582){ hh=285; ww=w-(h-285);} 
-				gridAx=(1024-w)/2;
-				gridAy=(590-(h+h+12))/2;
+				//if((h+h+12) > 582){ hh=285; ww=w-(h-285);} 
+				gridAx=(canvasWidth-w)/2;
+				gridAy=(canvasHeight-(h+h+12))/2;
 				gridBx=gridAx;
 				gridBy=gridAy+h+12;
-				if((h+h+24) > 590){
-					showH=289;
-					showW=w-(h-289); 
-					gridAx=(1024-showW)/2; 
-					gridAy=(590-(showH+showH+12))/2;
+				if((h+h+24) > canvasHeight){
+					showH=(canvasHeight-24)/2;
+					showW=w-(h-((canvasHeight-24)/2)); 
+					gridAx=(canvasWidth-showW)/2; 
+					gridAy=(canvasHeight-(showH+showH+12))/2;
 					gridBx=gridAx;
 					gridBy=gridAy+showH+12;
 				}
 			}
 			else if (dist == "BUA"){
-				if((h+h+12) > 582){ hh=285; ww=w-(h-285);}
-				gridBx=(1024-w)/2;
-				gridBy=(590-(h+h+12))/2;
+				//if((h+h+12) > 582){ hh=285; ww=w-(h-285);}
+				gridBx=(canvasWidth-w)/2;
+				gridBy=(canvasHeight-(h+h+12))/2;
 				gridAx=gridBx;
 				gridAy=gridBy+h+12;
-				if((h+h+24) > 590){
-					showH=289;
-					showW=w-(h-289); 
-					gridBx=(1024-showW)/2; 
-					gridBy=(590-(showH+showH+12))/2;
+				if((h+h+24) > canvasHeight){
+					showH=(canvasHeight-24)/2;
+					showW=w-(h-((canvasHeight-24)/2)); 
+					gridBx=(canvasWidth-showW)/2; 
+					gridBy=(canvasHeight-(showH+showH+12))/2;
 					gridAx=gridBx;
 					gridAy=gridBy+showH+12;
 				}

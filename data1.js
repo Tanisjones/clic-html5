@@ -32,5 +32,5 @@ dadesActivitat[3] = {
 					"textInit": "Activitat 1",
 					"textFinal": "FINALITZAT",
 					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3},
-					"distribucio" : "AB"
+					"distribucio" : "BUA"
 					};

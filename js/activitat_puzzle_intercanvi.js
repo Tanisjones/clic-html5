@@ -16,12 +16,17 @@ function PuzzleIntercanvi(){
 	var w,h;
 	var myImages = new ImageSet();
 	var grid;
-	var peces;
+	var peces = new Array();
 	var dist;
 	var x = new Array();
 	var y = new Array();
 	var ordArray = new Array();
 	var grid, showW, showH, gridAx, gridAy;
+	var primerClic = false;
+	var segonClic = false;
+	var tercerClic = false;
+	var idPrimer = 'none';
+	var idSegon = 'none';
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -44,14 +49,14 @@ function PuzzleIntercanvi(){
 			showW=myImage.width;
 			showH=myImage.height;
 			
-			gridAx=(1024-w)/2;
-			gridAy=(590-h)/2;
-				if((w+w+24) > 1024){
-					showW=500; 
-					showH=h-(w-500); 
-					gridAx=(1024-showW)/2; 
-					gridAy=(590-showH)/2; 
-				}
+			gridAx=(canvasWidth-w)/2;
+			gridAy=(canvasHeight-h)/2;
+			if(w > (canvasWidth-50)){
+				showW=(canvasWidth-50)/2; 
+				showH=h-(w-((canvasWidth-50)/2)); 
+				gridAx=(canvasWidth-showW)/2; 
+				gridAy=(canvasHeight-showH)/2; 
+			}
 			
 			lines=activityData.imatge.lines;
 			cols=activityData.imatge.cols;
@@ -66,7 +71,7 @@ function PuzzleIntercanvi(){
 			}
 			
 			ordArray.sort( randOrd );
-			
+
 			for (var o=0;o<peces.length;o++){
 				x[o]=peces[o].posx;
 				y[o]=peces[o].posy;
@@ -75,9 +80,10 @@ function PuzzleIntercanvi(){
 			for (var o=0;o<peces.length;o++){
 				peces[o].setPosx(x[ordArray[o]]);
 				peces[o].setPosy(y[ordArray[o]]);
+				peces[o].llocPeca=ordArray[o];
 			}	
 			/************************************************************/
-		
+
 			for (var o=0;o<peces.length;o++){	
 				myImages.add(peces[o]);
 			} 
@@ -90,45 +96,55 @@ function PuzzleIntercanvi(){
 	this.run = function() {
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
 
-		//LLEGIR DADES USUARI
 		if(DragData.active)
-		{
-			myText.renderText('DRAG FROM: '+DragData.startPosX+' '+DragData.startPosY, 24, 10,30);  
+		{  
+			primerClic = true;
 			
-			//Choose the selected image and activate it
 			if(frontImage=='none'){	
 				frontImage=myImages.getFrontImage(DragData.startPosX, DragData.startPosY);
 				if(frontImage!='notfound') frontImage.setDraggable();
-				
 			}
-			//Move the dragged image around
-			if(frontImage!='notfound'){
-				frontImage.drag(DragData.startPosX-DragData.currentPosX, DragData.startPosY-DragData.currentPosY);
+
+			if (segonClic==true){
+				idSegon = frontImage.id;
+				tercerClic=true;
 			}
 			
-		//Disable the current active image
 		}else{
-			if (!frontImage.colocada){	//per col·locar-la no h a d'estar col·locada
-				if (DragData.currentPosX>=(frontImage.colocaciox)&&DragData.currentPosX<=(frontImage.colocaciox+frontImage.w)&&
-						DragData.currentPosY>=(frontImage.colocacioy)&&DragData.currentPosY<=(frontImage.colocacioy+frontImage.h)){
-					frontImage.posx=frontImage.colocaciox;
-					frontImage.posy=frontImage.colocacioy;
-					colocades++;
-					frontImage.colocada=true;
-				}else{	//Si no es col·loca on toca torna a posició inicial
-					frontImage.posx=frontImage.iniposx;
-					frontImage.posy=frontImage.iniposy;
-				}
-			}else{
-				//si ja estava col·locada torna a col·locar-se bé!!
-				frontImage.posx=frontImage.colocaciox;
-				frontImage.posy=frontImage.colocacioy;
-			}
+			
+			//myText.renderText('DRAG FROM: '+DragData.currentPosX+' prim:'+idPrimer+' seg:'+idSegon, 24, 10,30);
+			
+			//comptar colocades!!!
+			//mirar que no es facin clics fora del panell!!!!
+			
+			if(tercerClic==true)
+			{
+				var auxX = myImages.images[idPrimer].posx;
+				var auxY = myImages.images[idPrimer].posy;
 				
+				myImages.images[idPrimer].setPosx(myImages.images[idSegon].posx);
+				myImages.images[idPrimer].setPosy(myImages.images[idSegon].posy);
+				
+				myImages.images[idSegon].setPosx(auxX);
+				myImages.images[idSegon].setPosy(auxY);
+
+				segonClic = false;
+				primerClic = false;
+				tercerClic = false;
+				idPrimer='none';
+				idSegon='none';
+			}
+			
+			if(primerClic==true){
+				idPrimer = frontImage.id;
+				segonClic = true;
+			}
+			
 			if(frontImage!='none'){
 				if(frontImage!='notfound') frontImage.unsetDraggable();
 				frontImage='none';
 			}
+			primerClic=false;		
 		}		
 		
 		//COMPROVAR ESTAT ACTIVITAT

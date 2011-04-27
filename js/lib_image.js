@@ -5,7 +5,7 @@ function randOrd(){
 function Peca(ctxt,id,img,posx,posy,w,h,insidePointx,insidePointy,insideSizew,insideSizeh,colocaciox,colocacioy,showH,showW)
 {
    this.ctxt = ctxt;
-   this.id = 'image'+id;
+   this.id = id;
    this.img = img;
    this.posx = posx;
    this.posy = posy;
@@ -86,7 +86,7 @@ function Peca(ctxt,id,img,posx,posy,w,h,insidePointx,insidePointy,insideSizew,in
 function ImageMemory(ctxt,id,img,showH,showW)
 {
    this.ctxt = ctxt;
-   this.id = 'image'+id;
+   this.id = id;
    this.img = img;
    this.posx;
    this.posy;
@@ -95,7 +95,9 @@ function ImageMemory(ctxt,id,img,showH,showW)
    this.showW=showW;
    this.colocada=false;
    this.numPeca;
-
+   this.hidden=true;
+   this.llocPeca;
+   
    this.setPosx = function(x){
 	   this.posx = x;
    };
@@ -108,9 +110,19 @@ function ImageMemory(ctxt,id,img,showH,showW)
 	   this.numPeca = numPeca;
    };
    
+   this.llocPeca = function(llocPeca){
+	   this.llocPeca = llocPeca;
+   };
+   
+   this.setHidden = function(hidden){
+	   this.hidden = hidden;
+   };
+   
    //Renders the image in the screen
    this.draw = function() {
-	   this.ctxt.drawImage(this.img,this.posx,this.posy,this.showW,this.showH);
+	   if (!this.hidden){
+		   this.ctxt.drawImage(this.img,this.posx,this.posy,this.showW,this.showH);
+	   }
 	};
 	
 	//Checks if the point x,y is inside the image
@@ -125,8 +137,8 @@ function ImageMemory(ctxt,id,img,showH,showW)
 		//Save some data
 		this.previousDepth= this.depth;
 		this.depth=20;
-		//this.startX = this.posx;
-		//this.startY = this.posy;
+		this.startX = this.posx;
+		this.startY = this.posy;
 	};
 	
 	//Sets the depth of the image
@@ -142,8 +154,8 @@ function ImageMemory(ctxt,id,img,showH,showW)
 	
 	//Drags the image according to a relative increment
 	this.drag = function(incX,incY){
-		//this.posx =  this.startX-incX;
-		//this.posy =  this.startY-incY;
+		this.posx =  this.startX-incX;
+		this.posy =  this.startY-incY;
 	};
 }
 
@@ -306,7 +318,7 @@ function ImageSet()
 	this.getFrontImage = function(x, y){
 		var img = 'notfound';
 		var currentdepth = 0;
-		
+	 	
 		for (i=0;i<this.num_images;i++){
 			if(this.images[i].isInside(x,y) && 
 			   this.images[i].depth>=currentdepth) {
