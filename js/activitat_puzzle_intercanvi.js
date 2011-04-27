@@ -98,53 +98,60 @@ function PuzzleIntercanvi(){
 
 		if(DragData.active)
 		{  
-			primerClic = true;
-			
 			if(frontImage=='none'){	
 				frontImage=myImages.getFrontImage(DragData.startPosX, DragData.startPosY);
 				if(frontImage!='notfound') frontImage.setDraggable();
 			}
 
-			if (segonClic==true){
-				idSegon = frontImage.id;
-				tercerClic=true;
+			//MIRAR SI S'HA CLICAT FORA DEL PANELL
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h){
+				primerClic = true;
+				if (segonClic==true){
+					idSegon = frontImage.id;
+					tercerClic=true;
+				}
 			}
-			
 		}else{
-			
-			//myText.renderText('DRAG FROM: '+DragData.currentPosX+' prim:'+idPrimer+' seg:'+idSegon, 24, 10,30);
-			
-			//comptar colocades!!!
-			//mirar que no es facin clics fora del panell!!!!
-			
-			if(tercerClic==true)
-			{
-				var auxX = myImages.images[idPrimer].posx;
-				var auxY = myImages.images[idPrimer].posy;
-				
-				myImages.images[idPrimer].setPosx(myImages.images[idSegon].posx);
-				myImages.images[idPrimer].setPosy(myImages.images[idSegon].posy);
-				
-				myImages.images[idSegon].setPosx(auxX);
-				myImages.images[idSegon].setPosy(auxY);
 
-				segonClic = false;
-				primerClic = false;
-				tercerClic = false;
-				idPrimer='none';
-				idSegon='none';
-			}
+			colocades=0;
 			
-			if(primerClic==true){
-				idPrimer = frontImage.id;
-				segonClic = true;
+			//MIRAR SI S'HA CLICAT FORA DEL PANELL
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h){
+				if(tercerClic==true)
+				{
+					var auxX = myImages.images[idPrimer].posx;
+					var auxY = myImages.images[idPrimer].posy;
+					
+					myImages.images[idPrimer].setPosx(myImages.images[idSegon].posx);
+					myImages.images[idPrimer].setPosy(myImages.images[idSegon].posy);
+					
+					myImages.images[idSegon].setPosx(auxX);
+					myImages.images[idSegon].setPosy(auxY);
+	
+					segonClic = false;
+					primerClic = false;
+					tercerClic = false;
+					idPrimer='none';
+					idSegon='none';
+					
+					//COMPROVAR SI ESTAN TOTES COL·LOCADES
+					for (var i=0; i<lines*cols;i++){
+						if (myImages.images[i].posx==myImages.images[i].colocaciox && myImages.images[i].posy==myImages.images[i].colocacioy){
+							colocades++;
+						}
+					}
+				}
+			
+				if(primerClic==true){
+					idPrimer = frontImage.id;
+					segonClic = true;
+				}
 			}
 			
 			if(frontImage!='none'){
 				if(frontImage!='notfound') frontImage.unsetDraggable();
 				frontImage='none';
-			}
-			primerClic=false;		
+			}	
 		}		
 		
 		//COMPROVAR ESTAT ACTIVITAT

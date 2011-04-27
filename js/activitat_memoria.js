@@ -85,9 +85,6 @@ function Memoria(){
 		
 		gridAx=(canvasWidth-w)/2;
 		gridAy=(canvasHeight-h)/2;
-		
-			//peces = createPecesMemory(context, activityData.llistaImatges, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, gridAx, gridAy);
-		
 
 		var id_img=0;
 		var peces = new Array();
@@ -167,57 +164,58 @@ function Memoria(){
 		//LLEGIR DADES USUARI
 		if(DragData.active)
 		{
-			primerClic = true;
-
 			if(frontImage=='none'){	
 				frontImage=myImages.getFrontImage(DragData.startPosX, DragData.startPosY);
 				if(frontImage!='notfound') frontImage.setDraggable();
 			}
 
-			if (segonClic==true){
-				idSegon = frontImage.id;
-				myImages.images[idSegon].setHidden(false);
-				numPrimer = myImages.images[idPrimer].numPeca;
-				numSegon = myImages.images[idSegon].numPeca;
-				
-				tercerClic=true;
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h*2){
+				primerClic = true;
+				if (segonClic==true){
+					idSegon = frontImage.id;
+					myImages.images[idSegon].setHidden(false);
+					
+					numPrimer = myImages.images[idPrimer].numPeca;
+					numSegon = myImages.images[idSegon].numPeca;
+					
+					tercerClic=true;
+				}
 			}
 			
 		//Disable the current active image
 		}else{
 
-			if(tercerClic==true)
-			{
-				if(numPrimer != numSegon){
-					myText.renderText('DRAG FROM: '+DragData.currentPosX+' prim:'+numPrimer+' seg:'+numSegon, 24, 10,30);
-					myImages.images[idPrimer].setHidden(true);
-					myImages.images[idSegon].setHidden(true);
-				}else{
-					colocades++;
+			if (DragData.currentPosX >= gridAx && DragData.currentPosX < w && DragData.currentPosY >= gridAy && DragData.currentPosY < h*2){
+				if(tercerClic==true)
+				{
+					if(numPrimer != numSegon){
+						myImages.images[idPrimer].setHidden(true);
+						myImages.images[idSegon].setHidden(true);
+					}else{
+						colocades++;
+					}
+					
+					segonClic = false;
+					primerClic = false;
+					tercerClic = false;
+					idPrimer='none';
+					idSegon='none';
 				}
 				
-				segonClic = false;
-				primerClic = false;
-				tercerClic = false;
-				idPrimer='none';
-				idSegon='none';
-			}
-			
-			if(primerClic==true){
-				idPrimer = frontImage.id;
-				myImages.images[idPrimer].setHidden(false);
-				segonClic = true;
+				if(primerClic==true){
+					idPrimer = frontImage.id;
+					myImages.images[idPrimer].setHidden(false);
+					segonClic = true;
+				}
 			}
 			
 			if(frontImage!='none'){
 				if(frontImage!='notfound') frontImage.unsetDraggable();
 				frontImage='none';
 			}
-			primerClic=false;
+			primerClic = false;
 		}	
-			
-		
-			
+	
 		//COMPROVAR ESTAT ACTIVITAT
 		if(colocades==(numPeca-1)){
 			acabat=true;
