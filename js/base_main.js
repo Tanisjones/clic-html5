@@ -1,11 +1,15 @@
 function iniciaActivitat(canvas,num) {
 	var act;
 	//Posar aqui tots els tipus d'activitat que hi hagi
-	if (tipusActivitat[num] == "Memoria") { act = new Memoria(); }
-	if (tipusActivitat[num] == "PuzzleDoble") { act = new PuzzleDoble(); }
-	if (tipusActivitat[num] == "PuzzleIntercanvi") { act = new PuzzleIntercanvi(); }
+	
+	//if (dadesActivitats.settings.atributsActivitat.title == "La xocolata") { act = new Memoria(); }
+	if (dadesActivitats.settings.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
+	
+	//if (tipusActivitat[num] == "PuzzleDoble") { act = new PuzzleDoble(); }
+	//if (tipusActivitat[num] == "PuzzleIntercanvi") { act = new PuzzleIntercanvi(); }
 	
 	//Inicialitzar l'activitat
+	//act.init(canvas, dadesActivitat[num]);
 	act.init(canvas, dadesActivitat[num]);
 	return act;
 }
@@ -22,7 +26,7 @@ UI.init(canvasControl);
 var uiClic;
 
 //Triem la primera activitat i l'inicalitzem
-var numActivitat = 1;
+var numActivitat = 0;
 var activitatActual=iniciaActivitat(canvas, numActivitat);
 
 

@@ -122,6 +122,9 @@ function ImageMemory(ctxt,id,img,showH,showW)
    this.draw = function() {
 	   if (!this.hidden){
 		   this.ctxt.drawImage(this.img,this.posx,this.posy,this.showW,this.showH);
+	   }else{
+		   this.ctxt.fillStyle = "#CCFF66";
+		   this.ctxt.fillRect(this.posx,this.posy,this.showW-0.01,this.showH-0.01);
 	   }
 	};
 	
@@ -201,8 +204,8 @@ function Grid(ctxt,lines,cols,imageSize,basePosition)
     this.theY = basePosition.y;//185
 	
 	//Renders the board in the screen
-	this.draw = function() {
-		this.ctxt.beginPath(); //esborra anteriors
+	this.draw = function(color) {
+		this.ctxt.beginPath(0,0,80,80); //esborra anteriors
 		for (var x = this.theX; x < (this.theX+((this.cols+1)*this.incrX)); x += this.incrX) {
 			this.ctxt.moveTo(x, this.theY);
 			this.ctxt.lineTo(x, this.theY+imageSize.height);
@@ -211,9 +214,8 @@ function Grid(ctxt,lines,cols,imageSize,basePosition)
 		for (var y = this.theY; y < (this.theY+((this.lines+1)*this.incrY)); y += this.incrY) {
 			this.ctxt.moveTo(this.theX, y);
 			this.ctxt.lineTo(this.theX+imageSize.width, y);
-		}
-		/* draw it! */   
-		this.ctxt.strokeStyle = "#000";
+		}  
+		this.ctxt.strokeStyle = "CC0000";
 		this.ctxt.stroke();	
 	};
 }

@@ -28,6 +28,7 @@ function Memoria(){
 	var idPrimer = 'none';
 	var idSegon = 'none';
 	var numPeca=1;
+	var window_bgColor;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -42,8 +43,13 @@ function Memoria(){
 
 		w=activityData.cellWidth;
 		h=activityData.cellHeight;
+
+		//w=activityData.celllist[1].atributs.cellWidth;
+		//h=activityData.celllist[1].atributs.cellHeight;
 		
 		dist = activityData.distribucio;
+		
+		//window_bgColor = activityData.atributsActivitat.settings-window-bgColor;
 		
 		/**************************************
 		// w: amplada general
@@ -143,14 +149,12 @@ function Memoria(){
 			peces[o].setPosy(y[ordArray[o]]);
 		}	
 		/////////////////////////////////////////////////////////////////////////////
-			
-		
+				
 		grid = new Grid(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy});
 		
 		for (var o=0;o<peces.length;o++){	
 			myImages.add(peces[o]);
 		}
-		
 	};
 	
 	//Aqui dins va el codi de l'activitat
@@ -158,8 +162,13 @@ function Memoria(){
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
 		
 		//DRAW THE IMAGE
+		
+		context.strokeStyle = "CC0000";
+		context.strokeRect(gridAx,gridAy,w,h);
+		//amplada!!!
+		
 		myImages.draw();
-		grid.draw();
+		grid.draw(window_bgColor);
 		
 		//LLEGIR DADES USUARI
 		if(DragData.active)

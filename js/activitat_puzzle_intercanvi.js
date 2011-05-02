@@ -27,6 +27,7 @@ function PuzzleIntercanvi(){
 	var tercerClic = false;
 	var idPrimer = 'none';
 	var idSegon = 'none';
+	var my_gradient;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -64,7 +65,7 @@ function PuzzleIntercanvi(){
 			peces = createPeca(context, myImage, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridAx,y:gridAy}, {w:showW,h:showH});
 			
 			grid = new Grid(context, lines, cols, {width:showW,height:showH}, {x:gridAx,y:gridAy});
-
+			
 			/*****************DESORDENAR PECES*************************/ 
 			for (var o=0;o<lines*cols;o++){
 				ordArray[o]=o;
@@ -166,7 +167,6 @@ function PuzzleIntercanvi(){
 		//DRAW THE IMAGE
 		myImages.draw();
 		grid.draw();
-
 	};
 	
 	//Aquest funcio s'ha de cridar un cop s'ha acabat l'activitat i es canvia a una altra

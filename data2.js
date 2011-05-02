@@ -2,8 +2,8 @@ var maxActivitats = 3;
 var tipusActivitat = [];
 var dadesActivitat = [];
 
-tipusActivitat[0] = "Memoria";
-dadesActivitat[0] = {
+tipusActivitat[1] = "Memoria";
+dadesActivitat[1] = {
 					"textInit": "Activitat 2",
 					"textFinal": "FINALITZAT",
 					"imatge" : { "src" : './images/pingui.jpg'},
@@ -34,15 +34,15 @@ dadesActivitat[0] = {
 											"settings-container-bgColor":"0xFFFF66"}
 					};
 
-tipusActivitat[1] = "PuzzleIntercanvi";
-dadesActivitat[1] = {
+tipusActivitat[2] = "PuzzleIntercanvi";
+dadesActivitat[2] = {
 					"textInit": "Activitat 3",
 					"textFinal": "FINALITZAT",
 					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3}
 					};
 
-tipusActivitat[2] = "PuzzleDoble";
-dadesActivitat[2] = {
+tipusActivitat[3] = "PuzzleDoble";
+dadesActivitat[3] = {
 					"textInit": "Activitat 1",
 					"textFinal": "FINALITZAT",
 					"imatge" : { "src" : './images/plane.jpg', "lines": 3, "cols": 3},
@@ -53,7 +53,7 @@ var dadesActivitats =	{"settings":
 							{"atributsActivitat":
 								{"skin-file":"@orange.xml",
 								"organization-state":"Catalunya",
-								"title":"@memory.MemoryGame",
+								"title":"La xocolata",
 								"descriptors-level":"Infantil (3-6)",
 								"organization-name":"CEIP La Florida",
 								"language":"català",
@@ -69,6 +69,49 @@ var dadesActivitats =	{"settings":
 							},
 							"activitats":
 								[{"atributsActivitat":
+									{"settings-window-border":"true",
+									"settings-window-bgColor":"0xFFFFFF",
+									"settings-container-gradient-dest":"0xFFFFFF",
+									"settings-container-counters-score":"true",
+									"settings-container-gradient-angle":"108",
+									"class":"@panels.InformationScreen",
+									"code":"",
+									"settings-report":"false",
+									"settings-margin":"8",
+									"settings-container-gradient-source":"0x993300",
+									"name":"inici",
+									"settings-container-counters-actions":"true",
+									"settings-container-counters-time":"true",
+									"settings-container-bgColor":"0xC0C0C0"
+									},
+									"cell":
+										[{"atributs":
+											{"media-level":"1",
+											"style-font-family":"Astigma",
+											"p":"LA XOCOLATA",
+											"style-color-background":"0x993300",
+											"style-color-foreground":"0xFFFFFF",
+											"style-font-size":"50",
+											"media-type":"PLAY_AUDIO",
+											"type":"initial",
+											"media-file":"la xocolata.mp3"}
+										}],
+										"celllist":[{"atributs":
+														{"shaper-rows":"1",
+														"cols":"1",
+														"shaper-cols":"1",
+														"shaper-class":"@Rectangular",
+														"cellHeight":"312.0",
+														"border":"true",
+														"cellWidth":"336.0",
+														"rows":"1"
+														},
+														"cell":[{"atributs":
+																	{"image":"FOTO CACAU copia [640x480].jpg"}
+																}]
+													}]
+									},
+									{"atributsActivitat":
 										{"settings-window-border":"true",
 										"settings-window-bgColor":"0xFF0033",
 										"settings-container-gradient-dest":"0xFF9933",
