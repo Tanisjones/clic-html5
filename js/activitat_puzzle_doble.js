@@ -11,7 +11,7 @@ function PuzzleDoble(){
 	//Variables especifiques d'aquesta activitat
 	var frontImage='none';
 	var colocades=0;
-	var acabat=false;
+	this.acabat=false;
 	var lines,cols;
 	var w,h;
 	var myImages = new ImageSet();
@@ -185,7 +185,7 @@ function PuzzleDoble(){
 		
 		//COMPROVAR ESTAT ACTIVITAT
 		if(colocades==lines*cols){
-			acabat=true;
+			this.acabat=true;
 		}
 		
 		if(acabat){

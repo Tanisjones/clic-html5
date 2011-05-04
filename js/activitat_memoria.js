@@ -11,7 +11,7 @@ function Memoria(){
 	//Variables especifiques d'aquesta activitat
 	var frontImage='none';
 	var colocades=0;
-	var acabat=false;
+	this.acabat=false;
 	var lines,cols;
 	var w,h;
 	var myImages = new ImageSetMemory();
@@ -29,6 +29,7 @@ function Memoria(){
 	var idSegon = 'none';
 	var numPeca=1;
 	var window_bgColor;
+	var incrShowX, incrShowY;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -41,16 +42,13 @@ function Memoria(){
 		myText.context = context;
 		myText.face = vector_battle;
 
-		w=activityData.cellWidth;
-		h=activityData.cellHeight;
+		//w=activityData.celllist[0].atributs.cellWidth;
+		//h=activityData.celllist[0].atributs.cellHeight;
+		w=225.0;
+		h=225.0;
+		
+		dist = activityData.atributsActivitat['layout-position'];
 
-		//w=activityData.celllist[1].atributs.cellWidth;
-		//h=activityData.celllist[1].atributs.cellHeight;
-		
-		dist = activityData.distribucio;
-		
-		//window_bgColor = activityData.atributsActivitat.settings-window-bgColor;
-		
 		/**************************************
 		// w: amplada general
 		// h: alçada general
@@ -59,8 +57,8 @@ function Memoria(){
 		***/
 		
 		if ((dist == "AB")||(dist == "BA")){
-			lines=activityData.lines*2;
-			cols=activityData.cols*2;
+			lines=activityData.celllist[0].atributs.rows*2;
+			cols=activityData.celllist[0].atributs.cols*2;
 			
 			if ((h*lines) > (canvasHeight-24)){ 	
 				incrShowY=(canvasHeight-24)/lines;
@@ -74,8 +72,8 @@ function Memoria(){
 			}
 		}
 		if ((dist == "AUB")||(dist == "BUA")){
-			lines=activityData.lines*2;
-			cols=activityData.cols;
+			lines=activityData.celllist[0].atributs.rows*2;
+			cols=activityData.celllist[0].atributs.cols;
 			
 			if ((w*cols) > (canvasWidth-24)){ 
 				incrShowX=(canvasWidth-24)/cols; 
@@ -86,6 +84,8 @@ function Memoria(){
 			}else{
 				incrShowX=w;
 				w=incrShowX*cols;
+				incrShowY=h;
+				h=incrShowY*lines;
 			}
 		}
 		
@@ -95,7 +95,7 @@ function Memoria(){
 		var id_img=0;
 		var peces = new Array();
 		
-		for(var i=0; i<activityData.llistaImatges.length; i++){
+		for(var i=0; i<6; i++){
 			
 			var myImage = new Image();
 			
@@ -103,7 +103,7 @@ function Memoria(){
 				imageLoaded = true;
 			};
 
-			myImage.src = activityData.llistaImatges[i].src;
+			myImage.src = "./images/" + activityData.celllist[0].cell[i].atributs.image;
 			var novaPeca = new ImageMemory(context, id_img, myImage,incrShowX,incrShowY);
 			novaPeca.setNumPeca(numPeca);
 			peces.push(novaPeca);
@@ -227,7 +227,7 @@ function Memoria(){
 	
 		//COMPROVAR ESTAT ACTIVITAT
 		if(colocades==(numPeca-1)){
-			acabat=true;
+			this.acabat=true;
 		}
 		
 		if(acabat){

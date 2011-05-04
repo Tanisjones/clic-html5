@@ -2,15 +2,13 @@ function iniciaActivitat(canvas,num) {
 	var act;
 	//Posar aqui tots els tipus d'activitat que hi hagi
 	
-	//if (dadesActivitats.settings.atributsActivitat.title == "La xocolata") { act = new Memoria(); }
-	if (dadesActivitats.settings.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
-	
-	//if (tipusActivitat[num] == "PuzzleDoble") { act = new PuzzleDoble(); }
-	//if (tipusActivitat[num] == "PuzzleIntercanvi") { act = new PuzzleIntercanvi(); }
+	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.DoublePuzzle") { act = new PuzzleDoble(); }
+	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.ExchangePuzzle") { act = new PuzzleIntercanvi(); }
+	if (dadesActivitats.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
+	if (dadesActivitats.activitats[num].atributsActivitat.class == "@panels.InformationScreen") { act = new Panels(); }
 	
 	//Inicialitzar l'activitat
-	//act.init(canvas, dadesActivitat[num]);
-	act.init(canvas, dadesActivitat[num]);
+	act.init(canvas, dadesActivitats.activitats[num]);
 	return act;
 }
 
@@ -18,15 +16,14 @@ function iniciaActivitat(canvas,num) {
 ////////////////////////////////////////////////
 var canvas = document.getElementById('canvas');
 var canvasControl = document.getElementById('canvasControl');
-
+var numActivitat = 0;
 	
 //Inicialitzem l'interficie d'usuari
 var UI = new UserInterface();
-UI.init(canvasControl);
+UI.init(canvasControl,numActivitat);
 var uiClic;
 
 //Triem la primera activitat i l'inicalitzem
-var numActivitat = 0;
 var activitatActual=iniciaActivitat(canvas, numActivitat);
 
 
@@ -34,14 +31,18 @@ var activitatActual=iniciaActivitat(canvas, numActivitat);
 var mainLoop = function () {	
 	
 	//Dibuixem l'interficie d'usuari
-	UI.draw();
-	
+	if (activitatActual.acabat){
+		UI.draw(1);
+	}else{
+		UI.draw(0);
+	}
+
 	//Mirem si hi ha algun event a la interficie d'usuari
 	uiClic = UI.checkClics();
 	if (uiClic == "next")
 	{	
 		//Mirem si podem avan�ar a la segŸent activitat
-		if (numActivitat < maxActivitats) 
+		if (numActivitat < maxActivitats-1) 
 		{
 			//Tanquem l'activitat anterior
 			activitatActual.end();

@@ -5,6 +5,8 @@ function UserInterface()
 	var canvasWidth;
 	var canvasHeight;
 	var textControl = new Text();
+	var textInicial = new Text();
+	var numActivitat;
 	
 	//Imatges
 	var ctrlImages = [
@@ -14,7 +16,7 @@ function UserInterface()
 	var myimages = new ImageSet();
 	var clicked; 
 	
-	this.init = function(canvas) {
+	this.init = function(canvas,num) {
 		////////////////////////////////////////////////
 		//Inicialitzem el canvas de control
 		canvasWidth  = canvas.width;
@@ -22,6 +24,7 @@ function UserInterface()
 		canvasLeft = canvas.offsetLeft;
 		canvasTop = canvas.offsetTop;
 		context = canvas.getContext("2d");
+		numActivitat = num;
 		
 		textControl.context = context;
 		textControl.face = vector_battle;
@@ -36,15 +39,16 @@ function UserInterface()
 		}
 	};
 	
-	this.draw = function() {
+	this.draw = function(numCell) {
 		//CLEAR SCREEN
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
 
 		//DRAW THE IMAGES
 		myimages.draw();
+		textControl.renderText(dadesActivitats.activitats[numActivitat].cell[numCell].atributs.p, 24, 180,30);
 		
-		if(ControlData.active)
-			textControl.renderText('TOUCH POS: '+(ControlData.startPosX-canvasLeft)+' '+(ControlData.startPosY-canvasTop)+' '+ControlData.active, 24, 10,30);  
+		/*if(ControlData.active)
+			textControl.renderText('TOUCH POS: '+(ControlData.startPosX-canvasLeft)+' '+(ControlData.startPosY-canvasTop)+' '+ControlData.active, 24, 10,30);*/  
 	};
 	
 	this.checkClics =  function(){
