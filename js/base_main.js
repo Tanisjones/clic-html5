@@ -2,16 +2,15 @@ function iniciaActivitat(canvas,num) {
 	var act;
 	//Posar aqui tots els tipus d'activitat que hi hagi
 	
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.DoublePuzzle") { act = new PuzzleDoble(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.ExchangePuzzle") { act = new PuzzleIntercanvi(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@panels.InformationScreen") { act = new Panels(); }
+	if (dadesActivitat.activitats[num].atributsActivitat.class == "@puzzles.DoublePuzzle") { act = new PuzzleDoble(); }
+	if (dadesActivitat.activitats[num].atributsActivitat.class == "@puzzles.ExchangePuzzle") { act = new PuzzleIntercanvi(); }
+	if (dadesActivitat.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
+	if (dadesActivitat.activitats[num].atributsActivitat.class == "@panels.InformationScreen") { act = new PanelInformation(); }
 	
 	//Inicialitzar l'activitat
-	act.init(canvas, dadesActivitats.activitats[num]);
+	act.init(canvas, dadesActivitat.activitats[num]);
 	return act;
 }
-
 
 ////////////////////////////////////////////////
 var canvas = document.getElementById('canvas');
@@ -26,16 +25,8 @@ var uiClic;
 //Triem la primera activitat i l'inicalitzem
 var activitatActual=iniciaActivitat(canvas, numActivitat);
 
-
 // MAIN LOOP FUNCTION
 var mainLoop = function () {	
-	
-	//Dibuixem l'interficie d'usuari
-	if (activitatActual.acabat){
-		UI.draw(1);
-	}else{
-		UI.draw(0);
-	}
 
 	//Mirem si hi ha algun event a la interficie d'usuari
 	uiClic = UI.checkClics();
@@ -51,10 +42,11 @@ var mainLoop = function () {
 			numActivitat++;
 			activitatActual=iniciaActivitat(canvas, numActivitat);
 		}
+		
 	} 
 	else if (uiClic == "previous") {
 		//Mirem si podem anar a l'activitat anterior
-		if (numActivitat > 1) 
+		if (numActivitat > 0) 
 		{
 			//Tanquem l'activitat anterior
 			activitatActual.end();
@@ -64,10 +56,19 @@ var mainLoop = function () {
 			activitatActual=iniciaActivitat(canvas, numActivitat);
 		}
 	}
-	
-	//Despres actualitzem l'activitat que tenim en progres
-	activitatActual.run();
+	else if (uiClic == "update") {
+		activitatActual=iniciaActivitat(canvas, numActivitat);
+	}
 
+	UI.draw(0,numActivitat);
+
+	if (activitatActual.acabat){
+		UI.draw(1,numActivitat);
+	}
+	//Despres actualitzem l'activitat que tenim en progres
+	activitatActual.run(canvasControl);
+	
+	
 };
 
 // START MAINLOOP

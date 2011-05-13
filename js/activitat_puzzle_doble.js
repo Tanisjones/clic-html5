@@ -7,21 +7,27 @@ function PuzzleDoble(){
 	var canvasWidth;
 	var canvasHeight;
 	var myText = new Text();
+	var grid;
 	
 	//Variables especifiques d'aquesta activitat
 	var frontImage='none';
 	var colocades=0;
 	this.acabat=false;
 	var lines,cols;
-	var w,h;
 	var myImages = new ImageSet();
-	var grid;
 	var peces;
 	var dist;
 	var x = new Array();
 	var y = new Array();
 	var ordArray = new Array();
-	var grid, showW, showH, gridAx, gridAy;
+	var w, h, showW, showH, gridBx, gridBy, gridAx, gridAy;
+	var colorfons, colorlinies, colorinactiu, colorfonsjoc, colorfonsalt, colorfonsbaix, gradiente;
+	var control = "0x";
+	var margin;
+	var intentos = 0;
+	var segons = 0;
+	var aciertos = 0;
+	var arxiuSoFi, reprodSoFi, reprodSo;
 	
 	//Funcio per a inicialitzar l'activitat a partir de les seves dades
 	this.init = function(canvas, activityData){
@@ -37,15 +43,43 @@ function PuzzleDoble(){
 		//Inicialitzar les imatges
 		var myImage = new Image();
 		
+		dist = activityData.atributsActivitat['layout-position'];
+		
+		colorfonsbaix = activityData.atributsActivitat['settings-container-gradient-dest'];
+		colorfonsbaix = "#"+colorfonsbaix.replace(control,"");
+		
+		colorfonsalt = activityData.atributsActivitat['settings-container-gradient-source'];
+		colorfonsalt = "#"+colorfonsalt.replace(control,"");
+		
+		gradiente = activityData.atributsActivitat['settings-container-gradient-angle'];
+		
+		margin = activityData.atributsActivitat['settings-margin'];
+		
+		colorfonsjoc = activityData.atributsActivitat['settings-window-bgColor'];
+		colorfonsjoc = "#"+colorfonsjoc.replace(control,"");
+		
+		colorlinies = activityData.celllist[0].atributs['style-color-border'];
+		if (!colorlinies) colorlinies = "0x00000";
+		colorlinies = "#"+colorlinies.replace(control,"");
+		
+		colorinactiu = activityData.celllist[0].atributs['style-color-inactive'];
+		if (!colorinactiu) colorinactiu = "0x00000";
+		colorinactiu = "#"+colorinactiu.replace(control,"");
+		
+		reprodSo = activityData.cell[0].atributs['media-type'];
+		reprodSoFi = activityData.cell[1].atributs['media-type'];
+		
+		arxiuSo = "./images/" + activityData.cell[0].atributs['media-file'];
+		arxiuSoFi = "./images/" + activityData.cell[1].atributs['media-file'];
+		
 		myImage.onload = function() {
 			imageLoaded = true;
-			w=myImage.width;
-			h=myImage.height;
-			showW=myImage.width;
-			showH=myImage.height;
-			
-			dist = activityData.distribucio;
-			
+			var w=myImage.width;
+			var h=myImage.height;
+			var showW=myImage.width;
+			var showH=myImage.height;
+			var gridAx, gridAy, gridBx, gridBy;
+
 			if (dist == "AB"){
 				gridAx=(canvasWidth-(w+w+12))/2;
 				gridAy=(canvasHeight-h)/2;
@@ -105,13 +139,13 @@ function PuzzleDoble(){
 				}
 			}
 			
-			lines=activityData.imatge.lines;
-			cols=activityData.imatge.cols;
+			lines=activityData.celllist[0].atributs.rows;
+			cols=activityData.celllist[0].atributs.cols;
 				
 			peces = createPeca(context, myImage, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridBx,y:gridBy}, {w:showW,h:showH});
 			
-			grid = new Grid(context, lines, cols, {width:showW,height:showH}, {x:gridBx,y:gridBy});
-
+			grid = new Grid(context, lines, cols, {width:showW,height:showH}, {x:gridBx,y:gridBy}, {x:gridAx,y:gridAy});
+			
 			/*****************DESORDENAR PECES*************************/ 
 			for (var o=0;o<lines*cols;o++){
 				ordArray[o]=o;
@@ -132,20 +166,33 @@ function PuzzleDoble(){
 		
 			for (var o=0;o<peces.length;o++){	
 				myImages.add(peces[o]);
-			} 
-
+			}
 		};
-		myImage.src = activityData.imatge.src;
+		
+		myImage.src = "./images/" + activityData.celllist[0].atributs.image;
+
+		if (reprodSo == "PLAY_AUDIO")
+		{
+			soundManager.url = "./sound/swf/";
+			soundManager.flashVersion = 9;
+			soundManager.useFlashBlock = false;
+			soundManager.onready(function() {
+				soundManager.createSound(arxiuSo,arxiuSo);
+				soundManager.createSound(arxiuSoFi,arxiuSoFi);
+				soundManager.play(arxiuSo);
+			});
+		}
 	};
 	
 	//Aqui dins va el codi de l'activitat
 	this.run = function() {
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
-
+		segons++;
+		
 		//LLEGIR DADES USUARI
 		if(DragData.active)
 		{
-			myText.renderText('DRAG FROM: '+DragData.startPosX+' '+DragData.startPosY, 24, 10,30);  
+			//myText.renderText('DRAG FROM: mm:'+margin+' . '+DragData.startPosX+' '+DragData.startPosY, 24, 10,30);  
 			
 			//Choose the selected image and activate it
 			if(frontImage=='none'){	
@@ -186,16 +233,25 @@ function PuzzleDoble(){
 		//COMPROVAR ESTAT ACTIVITAT
 		if(colocades==lines*cols){
 			this.acabat=true;
-		}
-		
-		if(acabat){
-			myText.renderText('FINALITZAT:', 24, 30,60);
+			if (reprodSoFi == "PLAY_AUDIO") soundManager.play(arxiuSoFi);
 		}
 		
 		//DRAW THE IMAGE
+		grid.drawFons(colorfonsalt, colorfonsbaix, canvasWidth, canvasHeight, gradiente);
+		grid.drawFonsJoc(colorfonsjoc, dist, margin);
+		grid.drawFonsInactiu(colorinactiu);
 		myImages.draw();
-		grid.draw();
-
+		grid.draw(colorlinies);
+		
+		contextControl.fillStyle = "black";
+		contextControl.font = "14pt Arial";
+		contextControl.fillText(aciertos, 890, 60);
+		contextControl.fillText(intentos, 940, 60);
+		
+		tiempo = segons/20;
+		tiempo = arrodonir(tiempo,0);
+		contextControl.fillText(tiempo, 990, 60);
+	
 	};
 	
 	//Aquest funcio s'ha de cridar un cop s'ha acabat l'activitat i es canvia a una altra
