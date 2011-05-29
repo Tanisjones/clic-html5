@@ -8,13 +8,14 @@
 	<style>
 		body { background: black; margin:0px; } 
 		#canvas { background: white; position: absolute; top:0px; left:0px; }
-		#canvasControl { background: #ccc; position: absolute; top:590px; left:0px; }
+		#canvasControl { position: absolute; top:590px; left:0px; }
 	</style>		
 </head>
-<body style="background: red;">	
+<body>	
+	
 	<canvas id="canvas" width="1024" height="590"></canvas>
+	<img id="image" src="" alt="" width="0" height="0" />
 	<canvas id="canvasControl" width="1024" height="100"></canvas>
-
 	
 	<!-- Shared Libraries -->
 	<!-- Fonts --> 
@@ -30,6 +31,8 @@
 	<script src="./js/activitat_memoria.js"></script>
 	<script src="./js/activitat_puzzle_doble.js"></script>
 	<script src="./js/activitat_puzzle_intercanvi.js"></script>
+	<script src="./js/activitat_panels_information.js"></script>
+	<script src="./js/activitat_simple_association.js"></script>
 
 	<!-- Fonts --> 
 	<script src="./fonts/vector_battle_regular.typeface.js"></script>
@@ -39,7 +42,10 @@
 	<script src="./fonts/helvetiker_italic.typeface.js"></script>
 
 	<!-- Data -->
-	<script src="data1.js"></script>
+	<script src="data.js"></script>
+	
+	<!--  Sound <script type="text/javascript" src="./sound/script/soundmanager2.js"></script> -->
+	
 		
 	<!-- Main Code -->	
 	<script src="./js/base_ui.js"></script>

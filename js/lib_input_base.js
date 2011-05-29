@@ -1,12 +1,17 @@
 var ipad=false;
-var android=false;
+var android=true;
 
 //Save if we have an android or an ios device
 if ( navigator.userAgent.match(/iPad/i) != null) { ipad = true; }
-else if ( navigator.userAgent.match(/Android/i) != null) { 
-	android = true; 
-//	document.getElementById('canvas').width=650;
-//	document.getElementById('canvas').height=320;			
+else if ( navigator.userAgent.match(/Android/i) != null) { android = true; }
+	
+if (android == true) {
+	document.getElementById('canvas').width=620;
+	document.getElementById('canvas').height=375;
+	document.getElementById('canvasControl').width=80;
+	document.getElementById('canvasControl').height=375;
+	document.getElementById('canvasControl').style.top='0px';
+	document.getElementById('canvasControl').style.left='620px';
 }
 
 //Prevent the standard multitouch events

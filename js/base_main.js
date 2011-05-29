@@ -2,16 +2,19 @@ function iniciaActivitat(canvas,num) {
 	var act;
 	//Posar aqui tots els tipus d'activitat que hi hagi
 	
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.DoublePuzzle") { act = new PuzzleDoble(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@puzzles.ExchangePuzzle") { act = new PuzzleIntercanvi(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
-	if (dadesActivitats.activitats[num].atributsActivitat.class == "@panels.InformationScreen") { act = new Panels(); }
-	
+	if (dadesActivitat.activitats[num].atributsActivitat.class == "@puzzles.DoublePuzzle" &&
+			dadesActivitat.activitats[num].celllist[0].atributs['shaper-class'] == "@ClassicJigSaw") { act = new PuzzleDoble(); }
+	else if (dadesActivitat.activitats[num].atributsActivitat.class == "@puzzles.ExchangePuzzle") { act = new PuzzleIntercanvi(); }
+	else if (dadesActivitat.activitats[num].atributsActivitat.class == "@memory.MemoryGame") { act = new Memoria(); }
+	else if (dadesActivitat.activitats[num].atributsActivitat.class == "@panels.InformationScreen") { act = new PanelInformation(); }
+	else if (dadesActivitat.activitats[num].atributsActivitat.class == "@associations.SimpleAssociation") { act = new SimpleAssociation(); }
+	else {
+		return "NO";
+	}
 	//Inicialitzar l'activitat
-	act.init(canvas, dadesActivitats.activitats[num]);
+	act.init(canvas, dadesActivitat.activitats[num]);
 	return act;
 }
-
 
 ////////////////////////////////////////////////
 var canvas = document.getElementById('canvas');
@@ -24,18 +27,16 @@ UI.init(canvasControl,numActivitat);
 var uiClic;
 
 //Triem la primera activitat i l'inicalitzem
-var activitatActual=iniciaActivitat(canvas, numActivitat);
 
+var activitatActual=iniciaActivitat(canvas, numActivitat);
+	
+while (activitatActual == "NO"){	
+	numActivitat++;
+	activitatActual=iniciaActivitat(canvas, numActivitat);
+}
 
 // MAIN LOOP FUNCTION
 var mainLoop = function () {	
-	
-	//Dibuixem l'interficie d'usuari
-	if (activitatActual.acabat){
-		UI.draw(1);
-	}else{
-		UI.draw(0);
-	}
 
 	//Mirem si hi ha algun event a la interficie d'usuari
 	uiClic = UI.checkClics();
@@ -50,11 +51,19 @@ var mainLoop = function () {
 			//I comencem la nova
 			numActivitat++;
 			activitatActual=iniciaActivitat(canvas, numActivitat);
+			var aux = numActivitat;
+			
+			while (activitatActual == "NO" && numActivitat < maxActivitats-1){	
+				numActivitat++;
+				activitatActual=iniciaActivitat(canvas, numActivitat);
+			}
+			
+			if (activitatActual == "NO") numActivitat = aux;
 		}
 	} 
 	else if (uiClic == "previous") {
 		//Mirem si podem anar a l'activitat anterior
-		if (numActivitat > 1) 
+		if (numActivitat > 0) 
 		{
 			//Tanquem l'activitat anterior
 			activitatActual.end();
@@ -62,12 +71,29 @@ var mainLoop = function () {
 			//I comencem la nova
 			numActivitat--;
 			activitatActual=iniciaActivitat(canvas, numActivitat);
+			var aux = numActivitat;
+			
+			while (activitatActual == "NO" && numActivitat > 0){	
+				numActivitat--;
+				activitatActual=iniciaActivitat(canvas, numActivitat);
+			}
+			if (activitatActual == "NO") numActivitat = aux;
 		}
+	}
+	else if (uiClic == "update") {
+		activitatActual=iniciaActivitat(canvas, numActivitat);
+	}
+
+	if (activitatActual.acabat){
+		UI.draw(1,numActivitat);
+	}else{
+		UI.draw(0,numActivitat);
 	}
 	
 	//Despres actualitzem l'activitat que tenim en progres
-	activitatActual.run();
-
+	if (activitatActual != "NO"){ activitatActual.run(canvasControl);}
+	else{numActivitat++;}
+	
 };
 
 // START MAINLOOP

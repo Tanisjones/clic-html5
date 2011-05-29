@@ -30,9 +30,17 @@ function Peca(ctxt,id,img,posx,posy,w,h,insidePointx,insidePointy,insideSizew,in
 	   this.iniposx = x;
    };
    
+   this.getPosx = function(){
+	   return this.posx;
+   };
+   
    this.setPosy = function(y){
 	   this.posy = y;
 	   this.iniposy = y;
+   };
+   
+   this.getPosy = function(){
+	   return this.posy;
    };
    
    this.setNumPeca = function(numPeca){
@@ -83,7 +91,98 @@ function Peca(ctxt,id,img,posx,posy,w,h,insidePointx,insidePointy,insideSizew,in
 
 }
 
-function ImageMemory(ctxt,id,img,showH,showW)
+function ImageAssociation(ctxt,id,nom,showW,showH)
+{
+   this.ctxt = ctxt;
+   this.id = id;
+   this.nom = nom;
+   this.posx;
+   this.posy;
+   this.depth = 0;
+   this.showH=showH;
+   this.showW=showW;
+   this.colocada=false;
+   this.hidden=false;
+   this.numPeca;
+   this.llocPeca;
+   
+   
+   this.setPosx = function(x){
+	   this.posx = x;
+   };
+   
+   this.setPosy = function(y){
+	   this.posy = y;
+   };
+   
+   this.setNumPeca = function(numPeca){
+	   this.numPeca = numPeca;
+   };
+   
+   this.llocPeca = function(llocPeca){
+	   this.llocPeca = llocPeca;
+   };
+   
+   this.setColocada = function(colocada){
+	   this.colocada = colocada;
+   };
+   
+   //A l'invers per poder utilitzar el memoryImage
+   this.draw = function(colorFonsNoms) {
+	   if (!this.hidden){
+		   this.ctxt.fillStyle = colorFonsNoms;
+		   this.ctxt.fillRect(this.posx, this.posy, this.showW, this.showH);   
+		   this.ctxt.fillStyle = "black";
+		   if (android){ this.ctxt.font = "11pt Arial";
+		   }else{ this.ctxt.font = "18pt Arial"; }
+		   this.ctxt.textAlign = "center";
+		   this.ctxt.textBaseline = "middle";
+		   this.ctxt.fillText(this.nom, this.posx+(this.showW/2), this.posy+(this.showH/2));
+	   }else{
+		   this.ctxt.fillStyle = colorFonsNoms;
+		   this.ctxt.fillRect(this.posx,this.posy,this.showW-0.01,this.showH-0.01);
+	   }
+   };
+	
+   this.setHidden = function(hidden){
+	   this.hidden = hidden;
+   };
+   
+	//Checks if the point x,y is inside the image
+	this.isInside = function(x,y){
+		if (x>=this.posx && x<=(this.posx+this.showW) 
+				&& y>=this.posy && y<=(this.posy+this.showH)) return true;
+		return false;
+	};
+
+	//Activates the image as a draggable element
+	this.setDraggable = function(){
+		//Save some data
+		this.previousDepth= this.depth;
+		this.depth=20;
+		this.startX = this.posx;
+		this.startY = this.posy;
+	};
+	
+	//Sets the depth of the image
+	//Depth must be an integer value between 0 (back) and 20 (front)
+	this.setDepth = function(depth){
+		this.depth = depth;
+	};
+	
+	//Deactivates the image as a draggable element
+	this.unsetDraggable = function(){
+		this.depth= this.previousDepth;
+	};
+	
+	//Drags the image according to a relative increment
+	this.drag = function(incX,incY){
+		this.posx =  this.startX-incX;
+		this.posy =  this.startY-incY;
+	};
+}
+
+function ImageMemory(ctxt,id,img,showW,showH)
 {
    this.ctxt = ctxt;
    this.id = id;
@@ -114,16 +213,21 @@ function ImageMemory(ctxt,id,img,showH,showW)
 	   this.llocPeca = llocPeca;
    };
    
+   this.setColocada = function(colocada){
+	   this.colocada = colocada;
+   };
+   
    this.setHidden = function(hidden){
 	   this.hidden = hidden;
    };
    
    //Renders the image in the screen
-   this.draw = function() {
+   this.draw = function(colorhidden) {
 	   if (!this.hidden){
 		   this.ctxt.drawImage(this.img,this.posx,this.posy,this.showW,this.showH);
 	   }else{
-		   this.ctxt.fillStyle = "#CCFF66";
+		   //this.ctxt.fillStyle = "#FF6666";
+		   this.ctxt.fillStyle = colorhidden;
 		   this.ctxt.fillRect(this.posx,this.posy,this.showW-0.01,this.showH-0.01);
 	   }
 	};
@@ -187,43 +291,93 @@ function createPeca(ctxt,myImage,lines,cols,imageSize,basePosition,imageColocati
 function arrodonir(quantitat, decimals) {
 	var quantitat = parseFloat(quantitat);
 	var decimals = parseFloat(decimals);
-	decimals = (!decimals ? 2 : decimals);
+	decimals = (!decimals ? decimals : decimals);
 	return Math.round(quantitat * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
-function Grid(ctxt,lines,cols,imageSize,basePosition)
+function Grid(ctxt,lines,cols,imageSize,basePosition,iniPosition)
 {	
 	this.ctxt = ctxt;
 	this.lines = lines;
 	this.cols = cols;
+	this.imageW = imageSize.width;
+	this.imageH = imageSize.height;
     this.incrY2 = imageSize.height/lines;//220/3 = 73.333
     this.incrX2 = imageSize.width/cols;//220/3 = 73.333
     this.incrY=arrodonir(this.incrY2,4);
     this.incrX=arrodonir(this.incrX2,4);
     this.theX = basePosition.x;//518
     this.theY = basePosition.y;//185
+    this.iniX = iniPosition.x;
+    this.iniY = iniPosition.y;
+    this.ww;
+    this.hh;
 	
 	//Renders the board in the screen
-	this.draw = function(color) {
-		this.ctxt.beginPath(0,0,80,80); //esborra anteriors
-		for (var x = this.theX; x < (this.theX+((this.cols+1)*this.incrX)); x += this.incrX) {
+	this.draw = function(colorlinies) {
+		this.ctxt.beginPath(0,0,0,0);
+
+		var x = this.theX;
+		for (var y = 0; y < this.cols; y++) {
 			this.ctxt.moveTo(x, this.theY);
-			this.ctxt.lineTo(x, this.theY+imageSize.height);
+			this.ctxt.lineTo(x, this.theY+this.imageH);
+			x+=this.incrX;
 		}
-		   
-		for (var y = this.theY; y < (this.theY+((this.lines+1)*this.incrY)); y += this.incrY) {
+		
+		var y = this.theY;
+		for (var x = 0; x < this.lines; x++ ) {
 			this.ctxt.moveTo(this.theX, y);
-			this.ctxt.lineTo(this.theX+imageSize.width, y);
-		}  
-		this.ctxt.strokeStyle = "CC0000";
+			this.ctxt.lineTo(this.theX+this.imageW, y);
+			y+=this.incrY;
+		} 
+		
+		this.ctxt.strokeStyle = colorlinies;
 		this.ctxt.stroke();	
+	};
+	
+	this.drawFonsInactiu = function(colorinactiu) {
+		 this.ctxt.fillStyle = colorinactiu;
+		 this.ctxt.fillRect(this.theX,this.theY,this.imageW,this.imageH);
+	};
+	
+	this.drawFons = function(colorfonsalt,colorfonsbaix,canvasWidth,canvasHeight,gradiente){
+		var my_gradient = this.ctxt.createLinearGradient(0, 0, 0, gradiente);
+		if (gradiente == "0"){
+			my_gradient=colorfonsalt;
+		}else{
+			my_gradient.addColorStop(1, colorfonsalt);
+			my_gradient.addColorStop(0, colorfonsbaix);
+		}
+		this.ctxt.fillStyle = my_gradient;
+		this.ctxt.fillRect(0, 0, canvasWidth, canvasHeight);
+	};
+	
+	this.drawFonsGrid = function(colorfonsalt,colorfonsbaix,canvasWidth,canvasHeight,gradiente,x,y){
+		var my_gradient = this.ctxt.createLinearGradient(y, x, gradiente, 0);
+		my_gradient.addColorStop(1, colorfonsalt);
+		my_gradient.addColorStop(0, colorfonsbaix);
+		this.ctxt.fillStyle = my_gradient;
+		this.ctxt.fillRect(x, y, canvasWidth, canvasHeight);
+	};
+	
+	this.drawFonsJoc = function(colorfonsjoc,dist,margin) {
+		 this.ctxt.fillStyle = colorfonsjoc;
+		 
+		 if (dist == "AB" || dist == "BA"){
+			 this.ww = (this.imageW*2)+(margin*2)+12;
+			 this.hh = this.imageH+(margin*2);
+		 }else if(dist == "0"){
+			 this.ww = this.imageW+(margin*2);
+			 this.hh = this.imageH+(margin*2);
+		 }else{
+			 this.ww = this.imageW+(margin*2);
+			 this.hh = (this.imageH*2)+(margin*2)+12;
+		 }
+
+		 this.ctxt.fillRect(this.iniX-margin,this.iniY-margin,this.ww,this.hh);
 	};
 }
 
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
 function ImageData(id,context,src)
 {
 	this.context=context;
@@ -287,12 +441,6 @@ function ImageData(id,context,src)
 	};
 } 
 
-
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-//A collection of images
 function ImageSet()
 {
 	this.images = new Array(20);
@@ -332,7 +480,6 @@ function ImageSet()
 	};
 }
 
-//A collection of images
 function ImageSetMemory()
 {
 	this.images = new Array(20);
@@ -345,12 +492,12 @@ function ImageSetMemory()
 	};
 	
 	// Draws all the images (maintaining the order)
-	this.draw = function(){
+	this.draw = function(colorhidden){
 		var i,depth;
 		for(depth=0;depth<21;depth++){
 			for (i=0;i<this.num_images;i++){
 				if(this.images[i].depth==depth){
-					this.images[i].draw();
+					this.images[i].draw(colorhidden);
 				}
 			}
 		}

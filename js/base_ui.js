@@ -7,17 +7,28 @@ function UserInterface()
 	var textControl = new Text();
 	var textInicial = new Text();
 	var numActivitat;
+	var i;
 	
 	//Imatges
-	var ctrlImages = [
-	              { "src" : './images/arrow_left_green.png', "posx" : 10, "posy" : 10, "w" : 35, "h" : 35},
-	              { "src" : './images/arrow_right_green.png', "posx" : 60, "posy" : 10, "w" : 35, "h" : 35},
-	         ];
+	if (android) {
+		var ctrlImages = [
+			              { "src" : './images/orange_left.png', "posx" : 10, "posy" : 10, "w" : 60, "h" : 60},
+			              { "src" : './images/orange_right.png', "posx" : 10, "posy" : 70, "w" : 60, "h" : 60},
+			              { "src" : './images/orange_update.png', "posx" : 10, "posy" : 130, "w" : 60, "h" : 60},
+			         ];		
+	} else {
+		var ctrlImages = [
+			              { "src" : './images/orange_left.png', "posx" : 10, "posy" : 10, "w" : 80, "h" : 80},
+			              { "src" : './images/orange_right.png', "posx" : 110, "posy" : 10, "w" : 80, "h" : 80},
+			              { "src" : './images/orange_update.png', "posx" : 210, "posy" : 10, "w" : 80, "h" : 80},
+			         ];		
+	}
+
 	var myimages = new ImageSet();
-	var clicked; 
+	var clicked;
 	
-	this.init = function(canvas,num) {
-		////////////////////////////////////////////////
+	this.init = function(canvas,num) 
+	{
 		//Inicialitzem el canvas de control
 		canvasWidth  = canvas.width;
 		canvasHeight = canvas.height;
@@ -30,7 +41,6 @@ function UserInterface()
 		textControl.face = vector_battle;
 		
 		//Inicialitzar les imatges
-		var i;
 		for (i=0;i<ctrlImages.length;i++){
 			var img = new ImageData(i,context,ctrlImages[i].src);
 			img.setPosition(ctrlImages[i].posx,ctrlImages[i].posy);
@@ -39,16 +49,49 @@ function UserInterface()
 		}
 	};
 	
-	this.draw = function(numCell) {
-		//CLEAR SCREEN
+	this.draw = function(numCell,numActivitat,so) 
+	{
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
-
-		//DRAW THE IMAGES
-		myimages.draw();
-		textControl.renderText(dadesActivitats.activitats[numActivitat].cell[numCell].atributs.p, 24, 180,30);
+		context.fillStyle = "orange";
 		
-		/*if(ControlData.active)
-			textControl.renderText('TOUCH POS: '+(ControlData.startPosX-canvasLeft)+' '+(ControlData.startPosY-canvasTop)+' '+ControlData.active, 24, 10,30);*/  
+		if(android) 
+		{
+			context.fillRect(0,0,80,375);
+			context.fillStyle = "black";
+			context.font = "9pt Arial";
+			context.fillText("aciertos", 22, 220);
+			context.fillText("intentos", 22, 270);
+			context.fillText("tiempo", 24, 320);
+			
+		} else {
+			
+			context.fillRect(0,0,1024,100);
+			
+			var fontt = dadesActivitat.activitats[numActivitat].cell[numCell].atributs['style-font-family'];
+			var x = 360+((800-360)/2);
+			var y = canvasHeight/2;
+			context.fillStyle = "black";
+			context.font = "18pt " + fontt;
+			context.textAlign = "center";
+			context.textBaseline = "middle";
+			
+			var text = dadesActivitat.activitats[numActivitat].cell[numCell].atributs.p;
+			var imsrc = dadesActivitat.activitats[numActivitat].cell[0].atributs.image;
+	
+			if (text) context.fillText(text, x, y);
+			
+			if(imsrc){
+				var img = new ImageData(i,context,imsrc);
+				img.setPosition(x-150,y-40);
+				img.setSize(300,80);
+				myimages.add(img);
+			}
+			
+			context.font = "9pt Arial";
+			context.fillText("aciertos   intentos   tiempo", 940, 30);
+		}
+		
+		myimages.draw();  
 	};
 	
 	this.checkClics =  function(){
@@ -61,7 +104,8 @@ function UserInterface()
 			//Mirem si hem apretat algun boto
 			if(clicked!='notfound' && clicked!='none') {
 				if( clicked.id == 'image0'){ControlData.active=false; return "previous";}
-				if( clicked.id == 'image1'){ControlData.active=false; return "next";}		
+				if( clicked.id == 'image1'){ControlData.active=false; return "next";}
+				if( clicked.id == 'image2'){ControlData.active=false; return "update";}
 			}	
 		} else {
 			clicked='none';
