@@ -1,11 +1,13 @@
+/**
+ * @author Noelia Tuset
+ */
+
 function UserInterface()
 {
 	//Variables del canvas
 	var context;
 	var canvasWidth;
 	var canvasHeight;
-	var textControl = new Text();
-	var textInicial = new Text();
 	var numActivitat;
 	var i;
 	
@@ -29,7 +31,7 @@ function UserInterface()
 	
 	this.init = function(canvas,num) 
 	{
-		//Inicialitzem el canvas de control
+		/** Inicialitzem el canvas de control  **/
 		canvasWidth  = canvas.width;
 		canvasHeight = canvas.height;
 		canvasLeft = canvas.offsetLeft;
@@ -37,10 +39,7 @@ function UserInterface()
 		context = canvas.getContext("2d");
 		numActivitat = num;
 		
-		textControl.context = context;
-		textControl.face = vector_battle;
-		
-		//Inicialitzar les imatges
+		/** Inicialitzar les imatges  **/
 		for (i=0;i<ctrlImages.length;i++){
 			var img = new ImageData(i,context,ctrlImages[i].src);
 			img.setPosition(ctrlImages[i].posx,ctrlImages[i].posy);
@@ -88,7 +87,7 @@ function UserInterface()
 			}
 			
 			context.font = "9pt Arial";
-			context.fillText("aciertos   intentos   tiempo", 940, 30);
+			context.fillText("encerts   intents   temps", 940, 30);
 		}
 		
 		myimages.draw();  
@@ -101,7 +100,7 @@ function UserInterface()
 			if(clicked=='none')
 				clicked=myimages.getFrontImage(ControlData.startPosX-canvasLeft, ControlData.startPosY-canvasTop);
 
-			//Mirem si hem apretat algun boto
+			/** Mirem si hem apretat algun boto **/
 			if(clicked!='notfound' && clicked!='none') {
 				if( clicked.id == 'image0'){ControlData.active=false; return "previous";}
 				if( clicked.id == 'image1'){ControlData.active=false; return "next";}

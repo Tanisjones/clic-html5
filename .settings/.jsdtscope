@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="js/|fonts/" kind="src" path=""/>
+	<classpathentry excluding="sound/demo/mpc/script/|sound/demo/flashblock/method1/|sound/demo/play-mp3-links/script/|sound/demo/animation-1/script/|sound/demo/360-player/script/|sound/troubleshoot/|sound/demo/mp3-player-button/script/|fonts/|js/|sound/demo/animation-2b/script/|sound/script/|sound/demo/360-player/|sound/demo/page-player/script/|sound/demo/|sound/demo/christmas-lights/" kind="src" path=""/>
 	<classpathentry kind="src" path="fonts"/>
 	<classpathentry kind="src" path="js"/>
+	<classpathentry excluding="mpc/script/|flashblock/method1/|play-mp3-links/script/|animation-1/script/|360-player/script/|mp3-player-button/script/|animation-2b/script/|360-player/|page-player/script/|christmas-lights/" kind="src" path="sound/demo"/>
+	<classpathentry excluding="script/" kind="src" path="sound/demo/360-player"/>
+	<classpathentry kind="src" path="sound/demo/360-player/script"/>
+	<classpathentry kind="src" path="sound/demo/animation-1/script"/>
+	<classpathentry kind="src" path="sound/demo/animation-2b/script"/>
+	<classpathentry kind="src" path="sound/demo/christmas-lights"/>
+	<classpathentry kind="src" path="sound/demo/flashblock/method1"/>
+	<classpathentry kind="src" path="sound/demo/mp3-player-button/script"/>
+	<classpathentry kind="src" path="sound/demo/mpc/script"/>
+	<classpathentry kind="src" path="sound/demo/page-player/script"/>
+	<classpathentry kind="src" path="sound/demo/play-mp3-links/script"/>
+	<classpathentry kind="src" path="sound/script"/>
+	<classpathentry kind="src" path="sound/troubleshoot"/>
 	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

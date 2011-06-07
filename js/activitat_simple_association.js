@@ -1,62 +1,56 @@
 /**
  * ACTIVITAT PUZZLE
+ * @author Noelia Tuset
  */
-function SimpleAssociation(){
-	//Variables del canvas
+function SimpleAssociation()
+{
 	var context;
 	var canvasWidth;
 	var canvasHeight;
-	var myText = new Text();
 	
-	//Variables especifiques d'aquesta activitat
+	/** Variables especifiques d'aquesta activitat **/
 	var frontImage='none';
-	var colocades=0;
 	this.acabat=false;
-	var lines,cols;
-	var w,h;
+	var idPrimer = 'none';
+	var idSegon = 'none';
+	
 	var myImages = new ImageSetMemory();
-	var grid;
-	var peces;
-	var dist;
 	var x = new Array();
 	var y = new Array();
 	var ordArray = new Array();
 	var ordArrayImatges = new Array();
-	var numPrimer, numSegon;
 	var primerClic = false;
 	var segonClic = false;
 	var tercerClic = false;
-	var idPrimer = 'none';
-	var idSegon = 'none';
-	var numPeca=1;
-	var colorlinies, colorhidden, colorfons, colorFonsNoms, background;
-	var theX, theY, incrShowX, incrShowY, capes;
 	var control = "0x";
 	var intentos = 0;
 	var segons = 0;
 	var aciertos = 0;
-	var arxiuSoFi, reprodSoFi, reprodSo;
+	var colocades=0;
+	var numPeca=1;
+	var lines, cols, w, h, w2, h2, grid, peces, dist, arxiuSoFi, reprodSoFi, reprodSo;
+	var colorlinies, colorhidden, colorfons, colorFonsNoms, background;
+	var theX, theY, incrShowX, incrShowY, capes, numPrimer, numSegon;
 	
-	//Funcio per a inicialitzar l'activitat a partir de les seves dades
-	this.init = function(canvas, activityData){
-		//Inicialitzar el canvas
+	/**
+	 * Funcio per a inicialitzar l'activitat a partir de les seves dades
+	 */
+	this.init = function(canvas, activityData)
+	{
+		/** S'inicialitza el canvas **/
 		canvasWidth  = canvas.width;
 		canvasHeight = canvas.height;
 		context = canvas.getContext("2d");
+		context.canvas.style.cursor = "default";
 		
-		//Inicialitzar la font
-		myText.context = context;
-		myText.face = vector_battle;
+		/** S'agafen les dades necessaries del fitxer data.js **/
 		
-		/**
-		 * Agafem les dades del fitxer data.js
-		 */
+		w=arrodonir(activityData.celllist[0].atributs.cellWidth,2);
+		h=arrodonir(activityData.celllist[0].atributs.cellHeight,2);
+		
+		w2=arrodonir(activityData.celllist[1].atributs.cellWidth,2); if(w2 > w) w = w2;
+		h2=arrodonir(activityData.celllist[1].atributs.cellHeight,2); if(h2 > h) h = h2;
 
-		//w=activityData.celllist[1].atributs.cellWidth;
-		//h=activityData.celllist[1].atributs.cellHeight;
-		w=100;
-		h=70;
-		
 		dist = activityData.atributsActivitat['layout-position'];
 		
 		colorhidden = activityData.celllist[0].cell[0].atributs['style-color-inactive'];
@@ -93,38 +87,31 @@ function SimpleAssociation(){
 		arxiuSo = activityData.cell[0].atributs['media-file'];
 		arxiuSoFi = activityData.cell[1].atributs['media-file'];
 		
-		colorFonsNoms = "FFFFFF";	
+		colorFonsNoms = "FFFFFF";
+		colorFonsNomsSota = "AAFFAA";
 		
 		/**
-		 * A partir del layout-position calculem:
-		 *	 w: amplada general
-		 *	 h: alçada general
-		 *	 incrShowX: amplada peça
-		 *	 incrShowY: alçada peça
+		 * El tauler de joc depenent de la distribucio que tingui
+		 * s'adapta a unes mides que es puguin mostrar les dades
+		 * adaptades a la pantalla correctament.
 		 */
-		
 		if ((dist == "AB")||(dist == "BA")){
 			lines=activityData.celllist[0].atributs.rows;
-			cols=activityData.celllist[0].atributs.cols*2;
-				
-			incrShowY=(canvasHeight-24)/lines;
-			aux=h-incrShowY;
-			//si el width es passa hem de resized...
-			h=(canvasHeight-24);
-			incrShowX=w-aux;
-			w=incrShowX*cols;
-		}
-		if ((dist == "AUB")||(dist == "BUA")){
-			lines=activityData.celllist[0].atributs.rows*2;
 			cols=activityData.celllist[0].atributs.cols;
- 
-			incrShowX=(canvasWidth-24)/cols; 
-			aux=w-incrShowX;
-			//si el heigth es passa hem de resized...
-			w=(canvasWidth-24);
-			incrShowY=h-aux;
-			h=incrShowY*lines;
+			cols = cols*2;
 		}
+		
+		if ((dist == "AUB")||(dist == "BUA")){
+			lines=activityData.celllist[0].atributs.rows;
+			lines = lines*2;
+			cols=activityData.celllist[0].atributs.cols;
+		}
+		
+		xy=adaptarGrid(canvasWidth,canvasHeight,w,h,lines,cols);
+		incrShowX = xy[0];
+		incrShowY = xy[1];
+		h=incrShowY*lines;
+		w=incrShowX*cols;
 		
 		gridAx=(canvasWidth-w)/2;
 		gridAy=(canvasHeight-h)/2;
@@ -145,6 +132,7 @@ function SimpleAssociation(){
 				var nomImage = activityData.celllist[0].cell[i].atributs.p;
 				var novaPeca = new ImageAssociation(context, id_img, nomImage,incrShowX,incrShowY);
 				novaPeca.setNumPeca(numPeca);
+				novaPeca.setColor(colorFonsNoms);
 				pecesPrimer.push(novaPeca);
 				id_img++;
 				numPeca++;	
@@ -195,6 +183,7 @@ function SimpleAssociation(){
 				var nomImage = activityData.celllist[1].cell[i].atributs.p;
 				var novaPeca = new ImageAssociation(context, id_img, nomImage,incrShowX,incrShowY);
 				novaPeca.setNumPeca(numPeca);
+				novaPeca.setColor(colorFonsNomsSota);
 				pecesSegon.push(novaPeca);
 				id_img++;
 				numPeca++;	
@@ -278,11 +267,11 @@ function SimpleAssociation(){
 			pecesSegon[o].setPosx(x[ordArrayImatges[o]]);
 			pecesSegon[o].setPosy(y[ordArrayImatges[o]]);
 		}
-
+		
 		/**
 		 * Pintem el tauler de peces.
 		 */
-		grid = new Grid(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridAx,y:gridAy});
+		grid = new Grid(context, lines/1, cols/1, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridAx,y:gridAy});
 		
 		for (var o=0;o<pecesPrimer.length;o++){
 			pecesPrimer[o].setHidden(false);
@@ -309,7 +298,6 @@ function SimpleAssociation(){
 	//Aqui dins va el codi de l'activitat
 	this.run = function(){
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
-		segons++;
 		context.strokeRect(gridAx,gridAy,w,h);
 		
 		if(DragData.active){
@@ -332,7 +320,7 @@ function SimpleAssociation(){
 			if (DragData.currentPosX >= gridAx && DragData.currentPosX < gridAx+w && 
 					DragData.currentPosY >= gridAy && DragData.currentPosY < gridAy+h){
 				if(tercerClic==true){
-					if(numPrimer == numSegon){
+					if(numPrimer == numSegon &&  idPrimer != idSegon){
 						myImages.images[idPrimer].setHidden(true);
 						myImages.images[idSegon].setHidden(true);
 						myImages.images[idPrimer].setColocada(true);
@@ -362,10 +350,13 @@ function SimpleAssociation(){
 		//COMPROVAR ESTAT ACTIVITAT
 		if(colocades==(numPeca-1)){
 			this.acabat=true;
-			if (reprodSoFi == "PLAY_AUDIO"){
+			context.canvas.style.cursor = 'url(./images/ok.cur), crosshair';
+			/*if (reprodSoFi == "PLAY_AUDIO"){
 				soundManager.play(arxiuSoFi);
 				reprodSoFi = "false";
-			}
+			}*/
+		}else{
+			segons++;
 		}
 		
 		//DRAW THE IMAGE

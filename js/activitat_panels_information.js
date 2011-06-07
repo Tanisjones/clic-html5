@@ -1,56 +1,51 @@
 /**
  * ACTIVITAT PANEL INFORMATION SCREEN
+ * @author Noelia Tuset
  */
-function PanelInformation(){
-	//Variables del canvas
+function PanelInformation()
+{
 	var context;
 	var canvasWidth;
 	var canvasHeight;
-	var myText = new Text();
 	
-	//Variables especifiques d'aquesta activitat
-	this.frontImage='none';
-	var colocades=0;
-	this.acabat=false;
-	var lines,cols;
-	var w,h;
+	/** Variables especifiques d'aquesta activitat **/
+	this.frontImage = 'none';
+	this.acabat = false;
+	this.idPrimer = 'none';
+	this.idSegon = 'none';
+	
 	var myImages = new ImageSet();
-	var grid, gridFons;
 	var peces = new Array();
-	var dist;
-	var x,y;
 	var ordArray = new Array();
-	var showW, showH, gridAx, gridAy;
+	var myImage = new Image();
+	var img = new Image();
 	var primerClic = false;
 	var segonClic = false;
 	var tercerClic = false;
-	this.idPrimer = 'none';
-	this.idSegon = 'none';
-	var my_gradient;
-	var colorlinies;
-	var colorfons, colorinactiu, colorfonsjoc, colorfonsalt, colorfonsbaix, gradiente, background;
-	var colorbaix, coloralt, grad, marg, imgw, imgh, cellWidth, cellHeight;
 	var control = "0x";
 	var intentos = 0;
 	var segons = 0;
 	var aciertos = 0;
-	var myImage = new Image();
-	var reprodSo, arxiuSo;
-	var image;
-	var img = new Image();
+	var colocades = 0;
+	var w = 0;
+	var h = 0;
+	var gridAx = 0;
+	var gridAy = 0;
+	var lines, cols, x, y, imgw, imgh, grid, showW, showH, reprodSo, arxiuSo, gridFons, imatgefons;
+	var colorlinies, colorfonsjoc, colorfonsalt, colorfonsbaix, gradiente, background, colorbaix, coloralt, grad, marg, image;
 	
-	//Funcio per a inicialitzar l'activitat a partir de les seves dades
-	this.init = function(canvas, activityData){
-		//Inicialitzar el canvas
+	/**
+	 * Funcio per a inicialitzar l'activitat a partir de les seves dades
+	 */
+	this.init = function(canvas, activityData)
+	{
+		/** Inicialitzar el canvas **/
 		canvasWidth  = canvas.width;
 		canvasHeight = canvas.height;
 		context = canvas.getContext("2d");
-		
-		//Inicialitzar la font
-		myText.context = context;
-		myText.face = vector_battle;
-		
-		//Inicialitzar les imatges		
+		context.canvas.style.cursor = "default";
+
+		/** Agafem les dades del fitxer data.js **/
 		colorfonsbaix = activityData.atributsActivitat['settings-container-gradient-dest'];
 		if (colorfonsbaix) colorfonsbaix = "#"+colorfonsbaix.replace(control,"");
 		
@@ -96,46 +91,47 @@ function PanelInformation(){
 		
 		myImage.onload = function() {
 			imageLoaded = true;
-			w=myImage.width;
-			h=myImage.height;
+			ww=myImage.width;
+			hh=myImage.height;
+			w = ww;
+			h = hh;
 			
-			if(h > canvasHeight-50){
-				w = w - (h - (canvasHeight-50));
+			if(hh > canvasHeight-50){
+				w = ww - (hh - (canvasHeight-50));
 				h = canvasHeight-50;
-			}else if (w > canvasWidth-50){
-				h = h - (w - (canvasWidth-50));
+				if(android) w = ww;
+			}else if (ww > canvasWidth-50){
+				h = hh - (ww - (canvasWidth-50));
 				w = canvasWidth-50;
+				if(android) h = hh;
 			}
-			
+
 			gridAx=(canvasWidth-w)/2;
 			gridAy=(canvasHeight-h)/2;
 		};
-		
 		
 		var rutaImatgeSenseCela = activityData.celllist[0].atributs.image;
 		
 		if (rutaImatgeSenseCela){
 			myImage.src = rutaImatgeSenseCela;
-			
 			document.getElementById('image').src = rutaImatgeSenseCela;
 		}else{
 			var rutaImatgeCela = activityData.celllist[0].cell[0].atributs.image;
-			
 			myImage.src = rutaImatgeCela;
-			
 			document.getElementById('image').src = rutaImatgeCela;	
 		}
 		
+		/** Carrega imatge del fons del joc **/
 		if (imatgefons){
 			img.onload = function(){
 				imgw=img.width;
 				imgh=img.height;	
 			};
-			
 			img.src = imatgefons;
 		}
-		/*
-		if (reprodSo == "PLAY_AUDIO")
+		
+		/** Reprodueix el so de l'activitat **/
+		/*if (reprodSo == "PLAY_AUDIO")
 		{
 			soundManager.url = "./sound/swf/";
 			soundManager.flashVersion = 9;
@@ -148,7 +144,6 @@ function PanelInformation(){
 		}*/
 	};
 	
-	//Aqui dins va el codi de l'activitat
 	this.run = function(canvasControl) 
 	{
 		contextControl = canvasControl.getContext("2d");
@@ -164,26 +159,26 @@ function PanelInformation(){
 				}
 			}
 		}else{
-			if (colorfonsalt) gridFons.drawFonsGrid(colorfonsalt, colorfonsbaix, canvasWidth, canvasHeight, canvasHeight, 0, 0);
-			/*if (!gradiente){
+			if (colorfonsalt){
+				gridFons.drawFonsGrid(colorfonsalt, colorfonsbaix, canvasWidth, canvasHeight, canvasHeight, 0, 0);
+			}
+			if (!gradiente){
 				grid.drawFons(background, 0, canvasWidth, canvasHeight, 0);
 			}else{
 				grid.drawFons(colorfonsalt, colorfonsbaix, canvasWidth, canvasHeight, gradiente);
-			}*/
+			}
 		}
 
 		if (grad){
-			if (colorfonsjoc!="") grid.drawFonsJoc(colorfonsjoc, "0", margin);
-			if (colorlinies!="") grid.drawFonsJoc(colorlinies, "0", marg);
-			if (coloralt!="") grid.drawFonsGrid(coloralt, colorbaix, w, h, h, gridAx, gridAy);
+			if (colorfonsjoc) grid.drawFonsJoc(colorfonsjoc, "0", margin);
+			if (colorlinies) grid.drawFonsJoc(colorlinies, "0", marg);
+			if (coloralt) grid.drawFonsGrid(coloralt, colorbaix, w, h, grad, gridAx, gridAy);
 		}else{
-			if (colorfonsjoc!="") grid.drawFonsJoc(colorfonsjoc, "0", margin);
-			if (colorlinies!="") grid.drawFonsJoc(colorlinies, "0", 2);
+			if (colorfonsjoc) grid.drawFonsJoc(colorfonsjoc, "0", margin);
+			if (colorlinies) grid.drawFonsJoc(colorlinies, "0", 2);
 		}
 		
 		image = document.getElementById('image');
-		context.drawImage(image,gridAx,gridAy,w,h);
-		
 		contextControl.fillStyle = "black";
 		contextControl.font = "14pt Arial";
 		tiempo = segons/20;
@@ -193,10 +188,12 @@ function PanelInformation(){
 			contextControl.fillText(aciertos, 35, 250);
 			contextControl.fillText(intentos, 35, 300);
 			contextControl.fillText(tiempo, 30, 350);
+			context.drawImage(image,gridAx,gridAy,w,h);
 		}else{
 			contextControl.fillText(aciertos, 890, 60);
 			contextControl.fillText(intentos, 940, 60);
 			contextControl.fillText(tiempo, 990, 60);
+			context.drawImage(image,gridAx,gridAy,w,h);
 		}
 	};
 	

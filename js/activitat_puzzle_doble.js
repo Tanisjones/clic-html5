@@ -6,7 +6,7 @@ function PuzzleDoble(){
 	var context;
 	var canvasWidth;
 	var canvasHeight;
-	var myText = new Text();
+	//var myText = new Text();
 	var grid;
 	
 	//Variables especifiques d'aquesta activitat
@@ -39,8 +39,8 @@ function PuzzleDoble(){
 		context = canvas.getContext("2d");
 		
 		//Inicialitzar la font
-		myText.context = context;
-		myText.face = vector_battle;
+		//myText.context = context;
+		//myText.face = vector_battle;
 		
 		//Inicialitzar les imatges
 		var myImage = new Image();
@@ -160,8 +160,6 @@ function PuzzleDoble(){
 					
 				peces = createPeca(context, myImage, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridBx,y:gridBy}, {w:showW,h:showH});
 				
-				//grid = new Grid(context, lines, cols, {width:showW,height:showH}, {x:gridBx,y:gridBy}, {x:gridAx,y:gridAy});
-				
 				/*****************DESORDENAR PECES*************************/ 
 				for (var o=0;o<lines*cols;o++){
 					ordArray[o]=o;
@@ -276,8 +274,6 @@ function PuzzleDoble(){
 			 * Pintem el tauler de peces.
 			 */
 			
-			//grid = new Grid(context, lines, cols, {width:w,height:h}, {x:gridAx,y:gridAy}, {x:gridAx,y:gridAy});
-			
 			for (var o=0;o<ll;o++){	
 				myImagesMem.add(peces[o]);
 				myImagesMem.images[o].setHidden(false);
@@ -311,8 +307,7 @@ function PuzzleDoble(){
 		
 		//LLEGIR DADES USUARI
 		if(DragData.active)
-		{
-			//myText.renderText('DRAG FROM: mm:'+margin+' . '+DragData.startPosX+' '+DragData.startPosY, 24, 10,30);  
+		{ 
 			if (joc == "@ClassicJigSaw"){
 				//Choose the selected image and activate it
 				if(frontImage=='none'){	
