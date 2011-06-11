@@ -47,7 +47,7 @@ var canvas = document.getElementById('canvas');
 var canvasControl = document.getElementById('canvasControl');
 var numActivitat = 0;
 var uiClic;
-var inicial;
+var inicial, ultima;
 
 /** Inicialitzem l'interficie d'usuari **/
 var UI = new UserInterface();
@@ -63,15 +63,14 @@ while (activitatActual == "NO"){
 	inicial = numActivitat;
 }
 
-var mainLoop = function () {	
-	var ultima, aux;
+var mainLoop = function () {
 	
 	/** Mirem si hi ha algun event a la interficie d'usuari **/
 	uiClic = UI.checkClics();
 	if (uiClic == "next")
 	{	
 		/** Mirem si podem avançar a la seguent activitat **/
-		if (numActivitat < maxActivitats-1) { //0<-->8  MaxActivitats=10
+		if (numActivitat < maxActivitats-1) {
 			/** Tanquem l'activitat anterior **/
 			activitatActual.end();
 			
@@ -79,27 +78,21 @@ var mainLoop = function () {
 			numActivitat++; //9
 			activitatActual=iniciaActivitat(canvas, numActivitat);
 			
-			while (activitatActual == "NO" && numActivitat < maxActivitats-1){	//no entra
+			while (activitatActual == "NO" && numActivitat < maxActivitats-1){
 				numActivitat++;
 				activitatActual=iniciaActivitat(canvas, numActivitat);
 			}
-			if (activitatActual != "NO") aux = numActivitat; 
-		}	
-		if (activitatActual == "NO"){ //la guardo
-			numActivitat = aux; //a auxiliar
-			//activitatActual=iniciaActivitat(canvas, numActivitat); //inicio la activitat
-		}
-		if(numActivitat == maxActivitats-1){ //9 --9
-			activitatActual=iniciaActivitat(canvas, numActivitat);
-			activitatActual.run(canvasControl);
-			numActivitat = aux;
+			
+			if(activitatActual == "NO" && numActivitat == maxActivitats-1){
+				numActivitat = ultima;
+				activitatActual=iniciaActivitat(canvas, numActivitat);
+			}
 		}
 	} 
 	else if (uiClic == "previous") {
 		/** Mirem si podem anar a l'activitat anterior **/
 		if (numActivitat > 0) 
 		{
-			if (activitatActual == "NO") numActivitat = aux;
 			/** Tanquem l'activitat anterior **/
 			activitatActual.end();
 			
@@ -108,15 +101,15 @@ var mainLoop = function () {
 			activitatActual=iniciaActivitat(canvas, numActivitat);
 			var aux = numActivitat;
 			
-			while (activitatActual == "NO" && numActivitat >= inicial){	
+			while (activitatActual == "NO"){	
 				numActivitat--;
 				activitatActual=iniciaActivitat(canvas, numActivitat);
 			}
 			
 			if (activitatActual == "NO") numActivitat = aux;
+			
 			if (numActivitat <= inicial){
 				activitatActual=iniciaActivitat(canvas, inicial);
-				activitatActual.run(canvasControl);
 				numActivitat = inicial;
 			}
 		}
@@ -135,8 +128,6 @@ var mainLoop = function () {
 	if (activitatActual != "NO"){  
 		ultima = numActivitat; 
 		activitatActual.run(canvasControl);
-	//}else{
-		//numActivitat++;
 	}
 };
 
