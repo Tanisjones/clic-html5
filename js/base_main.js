@@ -27,7 +27,8 @@ function iniciaActivitat(canvas,num) {
 	else if (dadesActivitat.activitats[num].atributsActivitat.classe == "@associations.SimpleAssociation") {
 		if (dadesActivitat.activitats[num].celllist[0].cell.length != 0){
 			var media = dadesActivitat.activitats[num].celllist[0].cell[0].atributs['media-type'];
-			if(media == "PLAY_AUDIO") return "NO";
+			var media2 = dadesActivitat.activitats[num].celllist[1].cell[0].atributs['media-type'];
+			if(media == "PLAY_AUDIO" || media2 == "PLAY_AUDIO") return "NO";
 			else act = new SimpleAssociation(); 
 		}else{
 			act = new SimpleAssociation(); 

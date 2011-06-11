@@ -41,7 +41,7 @@ function SimpleAssociation()
 		canvasWidth  = canvas.width;
 		canvasHeight = canvas.height;
 		context = canvas.getContext("2d");
-		context.canvas.style.cursor = "default";
+		context.canvas.style.cursor = "pointer";
 		
 		/** S'agafen les dades necessaries del fitxer data.js **/
 		
@@ -81,12 +81,12 @@ function SimpleAssociation()
 		if (!colorlinies) colorlinies = "#00000";
 		colorlinies = "#"+colorlinies.replace(control,"");
 		
-		reprodSo = activityData.cell[0].atributs['media-type'];
+		/*reprodSo = activityData.cell[0].atributs['media-type'];
 		reprodSoFi = activityData.cell[1].atributs['media-type'];
 		
 		arxiuSo = activityData.cell[0].atributs['media-file'];
 		arxiuSoFi = activityData.cell[1].atributs['media-file'];
-		
+		*/
 		colorFonsNoms = "FFFFFF";
 		colorFonsNomsSota = "AAFFAA";
 		
@@ -297,6 +297,7 @@ function SimpleAssociation()
 	
 	//Aqui dins va el codi de l'activitat
 	this.run = function(){
+		contextControl = canvasControl.getContext("2d");
 		context.clearRect(0, 0, canvasWidth, canvasHeight);
 		context.strokeRect(gridAx,gridAy,w,h);
 		
@@ -371,13 +372,14 @@ function SimpleAssociation()
 
 		contextControl.fillStyle = "black";
 		contextControl.font = "14pt Arial";
+		contextControl.textAlign = "center";
 		tiempo = segons/20;
 		tiempo = arrodonir(tiempo,0);
 		
 		if (android){
-			contextControl.fillText(aciertos, 35, 250);
-			contextControl.fillText(intentos, 35, 300);
-			contextControl.fillText(tiempo, 30, 350);
+			contextControl.fillText(aciertos, 40, 250);
+			contextControl.fillText(intentos, 40, 300);
+			contextControl.fillText(tiempo, 40, 350);
 		}else{
 			contextControl.fillText(aciertos, 890, 60);
 			contextControl.fillText(intentos, 940, 60);
